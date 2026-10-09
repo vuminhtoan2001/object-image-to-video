@@ -2,3 +2,124 @@
 09:03:02 === STAGE 1: image generation (PARALLEL across 2 GPUs) ===
 09:03:02 dome-product [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
 09:03:02 roses-smoke [image] submitting on https://cindy-buffer-workflow-marketplace.trycloudflare.com ...
+09:03:14 dome-product [image] denoise 0.75 10.6s
+09:03:15 roses-smoke [image] denoise 0.75 10.5s
+09:03:25 dome-product [image] denoise 0.75 21.1s
+09:03:25 roses-smoke [image] denoise 0.75 21.5s
+09:03:35 dome-product [image] denoise 0.75 31.8s
+09:03:36 roses-smoke [image] denoise 0.75 31.9s
+09:03:46 dome-product [image] denoise 0.75 42.1s
+09:03:46 roses-smoke [image] denoise 0.75 42.3s
+09:03:56 dome-product [image] denoise 0.75 52.4s
+09:03:57 roses-smoke [image] denoise 0.75 52.7s
+09:04:06 dome-product [image] denoise 0.75 62.8s
+09:04:07 roses-smoke [image] denoise 0.75 63.1s
+09:04:17 dome-product [image] denoise 0.75 73.1s
+09:04:17 roses-smoke [image] denoise 0.75 73.5s
+09:04:27 dome-product [image] denoise 0.75 83.5s
+09:04:28 roses-smoke [image] denoise 0.75 83.8s
+09:04:37 dome-product [image] done 1 93.8s
+09:04:38 roses-smoke [image] denoise 0.75 94.5s
+09:04:48 dome-product [image] DONE -> ef7a0ba08ba4478291c40273c421cd14 on https://examined-jobs-heard-franklin.trycloudflare.com
+09:04:48 golden-fireworks [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
+09:04:49 roses-smoke [image] done 1 104.9s
+09:05:00 roses-smoke [image] DONE -> c328770a16fd43bca652f599310dee86 on https://cindy-buffer-workflow-marketplace.trycloudflare.com
+09:05:00 smoke-reveal [image] submitting on https://cindy-buffer-workflow-marketplace.trycloudflare.com ...
+09:05:00 golden-fireworks [image] denoise 0.75 10.4s
+09:05:11 golden-fireworks [image] denoise 0.75 21s
+09:05:12 smoke-reveal [image] denoise 0.75 10.4s
+09:05:21 golden-fireworks [image] denoise 0.75 31.3s
+09:05:22 smoke-reveal [image] denoise 0.75 21.1s
+09:05:32 golden-fireworks [image] denoise 0.75 41.7s
+09:05:33 smoke-reveal [image] denoise 0.75 31.8s
+09:05:42 golden-fireworks [image] denoise 0.75 52s
+09:05:44 smoke-reveal [image] denoise 0.75 42.3s
+09:05:53 golden-fireworks [image] denoise 0.75 62.7s
+09:05:54 smoke-reveal [image] denoise 0.75 52.6s
+09:06:03 golden-fireworks [image] denoise 0.75 73s
+09:06:04 smoke-reveal [image] denoise 0.75 63s
+09:06:14 golden-fireworks [image] denoise 0.75 83.7s
+09:06:15 smoke-reveal [image] denoise 0.75 73.4s
+09:06:24 golden-fireworks [image] done 1 94s
+09:06:25 smoke-reveal [image] denoise 0.75 83.8s
+09:06:36 smoke-reveal [image] denoise 0.75 94.6s
+09:06:37 golden-fireworks [image] DONE -> 217b2f107e9a4610a8f7a5a5af3740c9 on https://examined-jobs-heard-franklin.trycloudflare.com
+09:06:37 helicopter-city-product [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
+09:06:46 smoke-reveal [image] done 1 105s
+09:06:49 helicopter-city-product [image] denoise 0.75 10.3s
+09:06:56 smoke-reveal [image] DONE -> 921dc17e55734f27bf9491486e41809f on https://cindy-buffer-workflow-marketplace.trycloudflare.com
+09:06:56 smoky-pedestal [image] submitting on https://cindy-buffer-workflow-marketplace.trycloudflare.com ...
+09:06:59 helicopter-city-product [image] denoise 0.75 20.9s
+09:07:09 smoky-pedestal [image] denoise 0.75 10.8s
+09:07:10 helicopter-city-product [image] denoise 0.75 31.2s
+09:07:19 smoky-pedestal [image] denoise 0.75 21.4s
+09:07:20 helicopter-city-product [image] denoise 0.75 41.6s
+09:07:30 smoky-pedestal [image] denoise 0.75 31.8s
+09:07:30 helicopter-city-product [image] denoise 0.75 51.9s
+09:07:40 smoky-pedestal [image] denoise 0.75 42.2s
+09:07:41 helicopter-city-product [image] denoise 0.75 62.2s
+09:07:50 smoky-pedestal [image] denoise 0.75 52.6s
+09:07:51 helicopter-city-product [image] denoise 0.75 72.6s
+09:08:01 smoky-pedestal [image] denoise 0.75 63.4s
+09:08:01 helicopter-city-product [image] denoise 0.75 82.9s
+09:08:11 smoky-pedestal [image] denoise 0.75 73.7s
+09:08:12 helicopter-city-product [image] done 1 93.3s
+09:08:22 smoky-pedestal [image] denoise 0.75 84.1s
+09:08:22 helicopter-city-product [image] DONE -> 6d0bf080dc284286a3c50cd1b6afe2e0 on https://examined-jobs-heard-franklin.trycloudflare.com
+09:08:22 led-strips-colorful [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
+09:08:33 smoky-pedestal [image] denoise 0.75 94.9s
+09:08:34 led-strips-colorful [image] denoise 0.75 10.6s
+09:08:43 smoky-pedestal [image] done 1 105.3s
+09:08:46 led-strips-colorful [image] denoise 0.75 21.2s
+09:08:53 smoky-pedestal [image] DONE -> 5f80eaa6fc40464a9aaf345d8cf82e5e on https://cindy-buffer-workflow-marketplace.trycloudflare.com
+09:08:53 snow [image] submitting on https://cindy-buffer-workflow-marketplace.trycloudflare.com ...
+09:08:57 led-strips-colorful [image] denoise 0.75 33.4s
+09:09:06 snow [image] denoise 0.75 10.8s
+09:09:07 led-strips-colorful [image] denoise 0.75 43.8s
+09:09:16 snow [image] denoise 0.75 21.4s
+09:09:17 led-strips-colorful [image] denoise 0.75 54.1s
+09:09:26 snow [image] denoise 0.75 31.9s
+09:09:28 led-strips-colorful [image] denoise 0.75 64.5s
+09:09:37 snow [image] denoise 0.75 42.7s
+09:09:38 led-strips-colorful [image] denoise 0.75 74.8s
+09:09:48 snow [image] denoise 0.75 53.1s
+09:09:48 led-strips-colorful [image] denoise 0.75 85.1s
+09:09:58 snow [image] denoise 0.75 63.4s
+09:09:59 led-strips-colorful [image] done 1 95.5s
+09:10:08 snow [image] denoise 0.75 73.8s
+09:10:09 led-strips-colorful [image] DONE -> ad4141a5d4314bae94ad04864c135c68 on https://examined-jobs-heard-franklin.trycloudflare.com
+09:10:09 liquid-gold [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
+09:10:19 snow [image] denoise 0.75 84.2s
+09:10:21 liquid-gold [image] denoise 0.75 10.3s
+09:10:29 snow [image] denoise 0.75 94.6s
+09:10:31 liquid-gold [image] denoise 0.75 21s
+09:10:40 snow [image] done 1 105.1s
+09:10:42 liquid-gold [image] denoise 0.75 31.3s
+09:10:49 snow [image] DONE -> c7a20f998cc44685b80dbd0696d194df on https://cindy-buffer-workflow-marketplace.trycloudflare.com
+09:10:49 water-electric-hues [image] submitting on https://cindy-buffer-workflow-marketplace.trycloudflare.com ...
+09:10:52 liquid-gold [image] denoise 0.75 41.7s
+09:11:02 water-electric-hues [image] queued 0 10.4s
+09:11:02 liquid-gold [image] denoise 0.75 52s
+09:11:12 water-electric-hues [image] queued 0 21s
+09:11:13 liquid-gold [image] denoise 0.75 62.3s
+09:11:22 water-electric-hues [image] queued 0 31.3s
+09:11:23 liquid-gold [image] denoise 0.75 72.6s
+09:11:33 water-electric-hues [image] denoise 0.75 41.7s
+09:11:34 liquid-gold [image] denoise 0.75 83.3s
+09:11:44 water-electric-hues [image] denoise 0.75 52.6s
+09:11:44 liquid-gold [image] done 1 93.6s
+09:11:54 water-electric-hues [image] denoise 0.75 63.4s
+09:11:56 liquid-gold [image] DONE -> 73db7dbec670427fa86d3a5fdc9207ea on https://examined-jobs-heard-franklin.trycloudflare.com
+09:11:56 package-to-product-with-confetti [image] submitting on https://examined-jobs-heard-franklin.trycloudflare.com ...
+09:12:05 water-electric-hues [image] denoise 0.75 73.8s
+09:12:07 package-to-product-with-confetti [image] denoise 0.75 10.3s
+09:12:15 water-electric-hues [image] denoise 0.75 84.2s
+09:12:18 package-to-product-with-confetti [image] denoise 0.75 20.9s
+09:12:26 water-electric-hues [image] denoise 0.75 94.6s
+09:12:28 package-to-product-with-confetti [image] denoise 0.75 31.2s
+09:12:36 water-electric-hues [image] denoise 0.75 105s
+09:12:38 package-to-product-with-confetti [image] denoise 0.75 41.6s
+09:12:46 water-electric-hues [image] denoise 0.75 115.4s
+09:12:49 package-to-product-with-confetti [image] denoise 0.75 52.2s
+09:12:58 water-electric-hues [image] denoise 0.75 125.8s
+09:12:59 package-to-product-with-confetti [image] denoise 0.75 62.6s

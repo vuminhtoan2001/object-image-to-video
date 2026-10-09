@@ -1,0 +1,76 @@
+'use strict';
+const fs = require('fs');
+const path = require('path');
+
+const IMG_SERVERS = [
+  'https://examined-jobs-heard-franklin.trycloudflare.com',
+  'https://cindy-buffer-workflow-marketplace.trycloudflare.com',
+];
+const PRODUCT_URL = 'https://bizweb.dktcdn.net/thumb/grande/100/469/765/products/1503-9de8f3562b364e56b550ff30bc493122-2c0db7cc76fd4b7f8b3c767fb24bc277-d4f804d8fc474b4bae5f628ff0d632e0-master.jpg';
+
+function log(...a) { console.log(new Date().toISOString().slice(11, 19), ...a); }
+
+async function postJob(base, p, body) {
+  const r = await fetch(base + p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const txt = await r.text();
+  let j; try { j = JSON.parse(txt); } catch (e) { j = { raw: txt.slice(0, 300) }; }
+  if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + (j.detail || j.raw || txt).toString().slice(0, 400));
+  return j;
+}
+async function pollJob(base, id, label) {
+  for (;;) {
+    await new Promise(r => setTimeout(r, 10000));
+    const r = await fetch(base + '/jobs/' + id, { signal: AbortSignal.timeout(20000) }).catch(e => { throw new Error('poll network error: ' + e.message); });
+    const j = await r.json();
+    log(label, j.stage, j.progress, j.elapsed + 's');
+    if (j.status !== 'processing') {
+      if (j.status === 'error') throw new Error(label + ' job error: ' + j.error + (j.where ? ' @ ' + j.where : ''));
+      return j;
+    }
+  }
+}
+async function downloadResult(base, id, outPath) {
+  const r = await fetch(base + '/jobs/' + id + '/result');
+  if (!r.ok) throw new Error('download result HTTP ' + r.status);
+  const buf = Buffer.from(await r.arrayBuffer());
+  fs.writeFileSync(outPath, buf);
+}
+
+async function stage1(id, imgServer) {
+  const tDir = path.join('templates', id);
+  const tpl = JSON.parse(fs.readFileSync(path.join(tDir, 'template.json'), 'utf8'));
+  const baseImgB64 = fs.readFileSync(path.join(tDir, 'base.png')).toString('base64');
+  log(id, '[image] submitting on', imgServer, '(steps=4)...');
+  const job = await postJob(imgServer, '/generate/accessory_flux_lab', {
+    anh_nguoi_base64: baseImgB64,
+    anh_phu_kien_url: PRODUCT_URL,
+    prompt: tpl.image_prompt,
+    dan_lai: false,
+    steps: 4,
+    test_case: 'baocao-v4-' + id,
+  });
+  await pollJob(imgServer, job.job_id, id + ' [image]');
+  fs.mkdirSync(path.join('bao-cao', id), { recursive: true });
+  await downloadResult(imgServer, job.job_id, path.join('bao-cao', id, 'test_preview_image.png'));
+  log(id, '[image] DONE ->', job.job_id, 'on', imgServer);
+  return { id, tpl, imageJobId: job.job_id, imgServer };
+}
+
+(async () => {
+  const ids = ['led-strips-colorful', 'smoky-pedestal', 'smoke-reveal', 'roses-smoke', 'water-splashes-light', 'helicopter-city-product', 'snow', 'liquid-gold'];
+  const half = Math.ceil(ids.length / 2);
+  const groupA = ids.slice(0, half);
+  const groupB = ids.slice(half);
+  log('groupA (server1):', groupA.join(', '));
+  log('groupB (server2):', groupB.join(', '));
+  const results = [];
+  const failed = [];
+  async function runGroup(group, server) {
+    for (const id of group) {
+      try { results.push(await stage1(id, server)); }
+      catch (e) { log(id, '!!! FAILED:', e.message); failed.push({ id, error: e.message }); }
+    }
+  }
+  await Promise.all([runGroup(groupA, IMG_SERVERS[0]), runGroup(groupB, IMG_SERVERS[1])]);
+  log('=== DONE === ok:', results.length, '/ failed:', failed.length);
+})().catch(e => { log('FATAL', e.stack || e.message); process.exit(1); });
