@@ -2,9 +2,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const IMG_SERVER = 'https://examined-jobs-heard-franklin.trycloudflare.com';
+const IMG_SERVER = 'https://cindy-buffer-workflow-marketplace.trycloudflare.com';
 const VID_SERVERS = [];
-const PRODUCT_URL = 'https://taous.vn/upload/product/iphoneblack4-1789900553.png';
+const PRODUCT_URL = 'https://bizweb.dktcdn.net/thumb/grande/100/469/765/products/1503-9de8f3562b364e56b550ff30bc493122-2c0db7cc76fd4b7f8b3c767fb24bc277-d4f804d8fc474b4bae5f628ff0d632e0-master.jpg';
 
 const SHARED = JSON.parse(fs.readFileSync('templates/_shared.json', 'utf8'));
 

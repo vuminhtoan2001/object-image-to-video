@@ -2,13 +2,26 @@
   "template_id": "water-splashes-light",
   "source_video_url": "https://public-files-cdn.mojo.video/assets/ai/previews/before-after/compressed/water-splashes-light.mp4",
   "source_video_local": "templates/water-splashes-light/source.mp4",
-  "video_info": { "width": 720, "height": 1280, "fps": 24, "nb_frames": 129, "duration_s": 5.375 },
+  "video_info": {
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "nb_frames": 129,
+    "duration_s": 5.375
+  },
   "frame_image": "templates/water-splashes-light/base.png",
   "frame_image_note": "SUA 2026-10: agent dau chon frame 18 nhung kiem lai bang mat van CON vet sang doc mau vang sat canh phai (~x=640-660/720). Dò lai: frame 22 moi thuc su sach. Doi sang frame 22 lam base.png chinh thuc. Co hieu ung quet sang (light-wipe) dau video giong smoky-pedestal/water-electric-hues, het han ~frame 20-22/129: bo cuc day du (san pham + crown splash nuoc + phan chieu duoi mat nuoc), khong con vet quet, splash dang o dinh diem (chua lang xuong thanh gon song).",
   "effect_prompt": "A dramatic crown-shaped splash of clear water erupts and surges around the base of the product as if it has just settled onto a reflective water surface, with droplets flying into the air and scattering realistically before falling back down. The splash gradually subsides and smooths into gentle concentric ripples that keep expanding outward across the surface, with a soft mirror-like reflection of the product visible below. The camera remains completely fixed, framing the product centered throughout, and the product itself never moves or rotates.",
   "effect_prompt_note": "Quan sat cac khung trai deu 129 khung/24fps: frame18-30 splash dang o dinh diem (crown nuoc + giot bay quanh san pham, bot trang o day), frame45-60 splash bat dau lang xuong thanh bot/song gon o chan san pham, frame75-120 mat nuoc lang han, chi con gon song dong tam lan rong dan va phan chieu san pham ro net ben duoi. Khong co hieu ung mau/neon doi mau (khac water-electric-hues). Camera KHONG di chuyen, san pham khong xoay -- khung hinh/vi tri/ty le giu nguyen suot clip.",
-  "image_prompt": "In image 1, the amber glass jar with a glossy white lid, standing in the center of the water splash, is completely removed, including its body, lid, reflections and shadow, and nothing of its shape remains. In its place, the product from image 2 stands as the central hero product in the middle of the water splash, in the same position and at the same scale, resting exactly where the original jar did. The product keeps its own shape and proportions from image 2 and does not take the shape of the jar. Stand the product upright and centered in the splash, matching the vertical presentation of the original jar, partially surrounded by the crown of water at its base. Keep the exact design of the product from image 2, including its shape, color, material, texture and every detail, with only the text and logos that are printed on it in image 2; no lettering or markings from image 1 appear on it. Keep the water splash, the reflective water surface, the lighting and the composition exactly the same as image 1. The water keeps splashing and crowning around the new product exactly as in image 1. Do not add any detail that is not in image 1 or image 2.",
-  "image_prompt_note": "Phong theo dung cau truc image_prompt_skeleton va vi du water-electric-hues. {SCENE_POSITION_DESC}/{PRESENTATION} dien theo huong dung/can giua trong splash. Khong nhac mau sac/hieu ung nao khac ngoai nuoc trong vi base.png (frame 18) chi co nuoc trang trong, khong co mau phu them.",
-  "params": { "so_frame": 65, "fps": 16, "steps": 4, "buoc_cao": 2, "guidance": 1.0, "lora": "t2v" },
+  "image_prompt": "Replace the entire jar in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.",
+  "image_prompt_note": "Viet lai 2026-10 LAN 2 theo cong thuc da duoc NGUOI DUNG tu tay xac nhan hoat dong tren golden-fireworks (ca KHO NHAT, 5 lan thu truoc deu that bai): 'Replace the entire X in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.' Day la cau LENH TRUC TIEP (imperative 'Replace'), ngan gon, KHONG mo ta vi tri/scene/anh sang gi them -- bang chung cho thay day moi la yeu to quyet dinh (khong phai tranh phu dinh nhu ket luan LAN 1 truoc do, vi ban 'tich cuc' lan 1 van that bai tren chinh golden-fireworks). Tat ca 12 template dong loat doi sang cong thuc nay; CHUA retest het, uu tien retest cac ca TUNG THANH CONG o ban cu (helicopter-city-product, led-strips-colorful, smoky-pedestal) de dam bao khong lam hong cai dang chay tot.",
+  "params": {
+    "so_frame": 65,
+    "fps": 16,
+    "steps": 4,
+    "buoc_cao": 2,
+    "guidance": 1,
+    "lora": "t2v"
+  },
   "status": "cho_test"
 }

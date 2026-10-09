@@ -2,13 +2,26 @@
   "template_id": "golden-fireworks",
   "source_video_url": "https://public-files-cdn.mojo.video/assets/ai/previews/before-after/compressed/golden-fireworks.mp4",
   "source_video_local": "templates/golden-fireworks/source.mp4",
-  "video_info": { "width": 720, "height": 1280, "fps": 24, "nb_frames": 129, "duration_s": 5.375 },
+  "video_info": {
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "nb_frames": 129,
+    "duration_s": 5.375
+  },
   "frame_image": "templates/golden-fireworks/base.png",
   "frame_image_note": "Video co hieu ung quet sang (light-wipe) o dau: frame 19 van con vet sang mong sat canh phai, frame 20 het vet quet hoan toan (nen den + phao hoa hien day du hai ben). Lay frame 20 vi ngay sau do (~frame 22-23) xuat hien them hai tia lua sang (flare) hai ben duoi day san pham ma frame 20 chua co -- frame 20 chi co 1 quang sang diu lan toa duoi san pham, dung truoc khi hieu ung tia lua phu them xuat hien.",
   "effect_prompt": "Golden fireworks continuously burst and bloom symmetrically in the dark night sky behind the product, trailing sparks and embers drifting slowly downward. A soft warm golden glow pools on the ground directly beneath the product, with occasional bright sparkler flares igniting beside its base and shooting upward. The camera remains completely fixed throughout, with no zoom or movement, and the product stays perfectly still, floating steady in place above the glowing ground.",
   "effect_prompt_note": "Quan sat tu frame 20 den frame 120 (129 khung/24fps): phao hoa no lien tuc thanh cac chum doi xung mau vang/hoang kim phia sau san pham, hinh dang chum thay doi lien tuc (tia thang, tia cong vong cung...) nhung mau luon la vang/hoang kim, khong doi sang mau khac. Duoi day san pham co 1 quang sang vang diu; tu ~frame 22-23 xuat hien them 2 tia lua sang doi xung hai ben bay vot len, luc co luc khong qua cac khung (frame 45 khong thay, frame 60-105 lai thay). San pham (chai) KHONG di chuyen vi tri/kich thuoc, KHONG xoay -- no lo lung co dinh ngay tren vung sang duoi dat, camera hoan toan tinh.",
-  "image_prompt": "In image 1, the amber glass beverage bottle with its dark metal cap and rust-orange paper label bearing a circular logo, floating centered above the glowing ground, is completely removed, including its cap, neck, label and bottle body, reflections and shadow, and nothing of its shape remains. In its place, the product from image 2 stands as the central hero product floating centered above the glowing ground, in the same position and at the same scale, floating exactly where the original bottle did. The product keeps its own shape and proportions from image 2 and does not take the shape of the bottle. Stand the product upright and centered above the glow, matching the vertical floating presentation of the original bottle. Keep the exact design of the product from image 2, including its shape, color, material, texture and every detail, with only the text and logos that are printed on it in image 2; no lettering or markings from image 1 appear on it. Keep the dark night background, the golden fireworks bursts, the glow pooling on the ground beneath it, the lighting and the composition exactly the same as image 1. The fireworks keep bursting and the golden glow keeps pooling beneath the new product exactly as in image 1. Do not add any detail that is not in image 1 or image 2.",
-  "image_prompt_note": "Phong theo cung cau truc voi cac template khac. {SCENE_POSITION_DESC}/{PRESENTATION} nhan manh san pham dang LO LUNG phia tren vung sang duoi dat (khong cham dat) -- can giu dung chi tiet nay de anh ghep khop voi bo cuc goc. Base.png (frame 20) chi co 1 quang sang diu duoi day, CHUA co 2 tia lua ban len (hieu ung do la cua effect_prompt/video, xuat hien tu ~frame 22 tro di, luc co luc khong).",
-  "params": { "so_frame": 65, "fps": 16, "steps": 4, "buoc_cao": 2, "guidance": 1.0, "lora": "t2v" },
+  "image_prompt": "Replace the entire bottle in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.",
+  "image_prompt_note": "Viet lai 2026-10 LAN 2 theo cong thuc da duoc NGUOI DUNG tu tay xac nhan hoat dong tren golden-fireworks (ca KHO NHAT, 5 lan thu truoc deu that bai): 'Replace the entire X in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.' Day la cau LENH TRUC TIEP (imperative 'Replace'), ngan gon, KHONG mo ta vi tri/scene/anh sang gi them -- bang chung cho thay day moi la yeu to quyet dinh (khong phai tranh phu dinh nhu ket luan LAN 1 truoc do, vi ban 'tich cuc' lan 1 van that bai tren chinh golden-fireworks). Tat ca 12 template dong loat doi sang cong thuc nay; CHUA retest het, uu tien retest cac ca TUNG THANH CONG o ban cu (helicopter-city-product, led-strips-colorful, smoky-pedestal) de dam bao khong lam hong cai dang chay tot.",
+  "params": {
+    "so_frame": 65,
+    "fps": 16,
+    "steps": 4,
+    "buoc_cao": 2,
+    "guidance": 1,
+    "lora": "t2v"
+  },
   "status": "cho_test"
 }

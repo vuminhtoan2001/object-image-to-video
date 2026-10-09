@@ -2,13 +2,26 @@
   "template_id": "package-to-product-with-confetti",
   "source_video_url": "https://public-files-cdn.mojo.video/assets/ai/previews/before-after/compressed/package-to-product-with-confetti.mp4",
   "source_video_local": "templates/package-to-product-with-confetti/source.mp4",
-  "video_info": { "width": 720, "height": 1280, "fps": 24, "nb_frames": 129, "duration_s": 5.375 },
+  "video_info": {
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "nb_frames": 129,
+    "duration_s": 5.375
+  },
   "frame_image": "templates/package-to-product-with-confetti/base.png",
   "frame_image_note": "Video co hai giai doan transition truoc khi toi bo cuc hero cuoi cung. (1) Frame 0-8 la mot anh 'teaser' khong lien quan den bo cuc that (san pham dung tren nen den trong), sau do mot light-wipe (vach sang doc quet qua) o ~frame 9-13 chuyen sang canh that: hop carton dong kin dung tren san go truoc tuong trang. (2) Tiep theo la mot transformation rieng cua hop: hop tu bung no (~frame 60-72), 2 vat hop bat ra nam phang 2 ben, bong bay vang bay len, confetti vang bat ra va san pham (dien thoai) hien ra dung giua. Lay frame 72/129 (24fps) lam base.png: tai day hop da mo het va vat hop da nam phang on dinh, bong bay da len vi tri treo on dinh, san pham hien ra day du, con confetti moi bat dau roi (chua tich tu nhieu duoi san) -- dai dien sach nhat cho trang thai hero da hoan tat ca 2 giai doan transition.",
   "effect_prompt": "Golden confetti pieces continue falling gently from above, drifting down past the product and settling lightly on the floor, while a cluster of glossy golden balloons floats calmly above the scene, bobbing very slightly on their strings. The two opened cardboard box flaps rest flat on the floor on either side of the product. The camera stays completely fixed throughout, with no camera movement, no pan, no zoom; bright clean studio lighting, photorealistic advertisement cinematography, consistent composition.",
   "effect_prompt_note": "Quan sat qua cac frame 72-128: bo cuc (vi tri hop, bong bay, tuong, san go) gan nhu dung yen hoan toan, chi co confetti la tiep tuc roi lien tuc (hieu ung lap/time-based), bong bay chi hoi rung nhe. Camera co dinh, khong pan/zoom (vien khung va duong chan tuong khong doi qua cac frame). KHONG dua vao effect_prompt canh hop tu bung no/mo ra vi giai doan do xay ra TRUOC base frame duoc chon (khong the tai tao tu 1 anh tinh lam diem bat dau) -- chi mo ta chuyen dong TIEP THEO tu base frame tro di, giong cach lam cua smoky-pedestal.",
-  "image_prompt": "In image 1, the black smartphone standing upright in the center of the scene is completely removed, including its body, camera module, reflections and shadow, and nothing of its shape remains. In its place, the product from image 2 stands as the central hero product upright on the wooden floor between the two opened cardboard box flaps, in the same position and at the same scale, resting exactly as the original product did. The product keeps its own shape and proportions from image 2 and does not take the shape of the phone. Stand the product upright and centered between the box flaps, matching the vertical presentation of the original phone. Keep the exact design of the product from image 2, including its shape, color, material, texture and every detail, with only the text and logos that are printed on it in image 2; no lettering or markings from image 1 appear on it. Keep the opened cardboard box flaps on the floor, the golden balloons floating above, the scattered gold confetti pieces, the wooden floor, the white wall background, the lighting and the composition exactly the same as image 1. The gold confetti keeps drifting naturally around the new product as in image 1, without covering its design. Do not add any detail that is not in image 1 or image 2.",
-  "image_prompt_note": "{OLD_PRODUCT_DESC}=dien thoai den dung giua canh; {SCENE_POSITION_DESC}=dung giua 2 vat hop da mo tren san go; {PRESENTATION}=cau dinh huong dung/can giua nhu ban goc; {SCENE_ELEMENTS}=vat hop + bong bay vang + confetti vang + san go + tuong trang. KHONG nhac canh hop dang mo/bung no vi chi tiet do khong con xuat hien trong base.png da chon (base da o sau giai doan transformation). Confetti CO xuat hien trong base.png nen duoc giu trong image_prompt (giong cach smoky-pedestal giu khoi), khac voi cac hieu ung chi xuat hien o frame sau base.",
-  "params": { "so_frame": 65, "fps": 16, "steps": 4, "buoc_cao": 2, "guidance": 1.0, "lora": "t2v" },
+  "image_prompt": "Replace the entire phone in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.",
+  "image_prompt_note": "Viet lai 2026-10 LAN 2 theo cong thuc da duoc NGUOI DUNG tu tay xac nhan hoat dong tren golden-fireworks (ca KHO NHAT, 5 lan thu truoc deu that bai): 'Replace the entire X in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.' Day la cau LENH TRUC TIEP (imperative 'Replace'), ngan gon, KHONG mo ta vi tri/scene/anh sang gi them -- bang chung cho thay day moi la yeu to quyet dinh (khong phai tranh phu dinh nhu ket luan LAN 1 truoc do, vi ban 'tich cuc' lan 1 van that bai tren chinh golden-fireworks). Tat ca 12 template dong loat doi sang cong thuc nay; CHUA retest het, uu tien retest cac ca TUNG THANH CONG o ban cu (helicopter-city-product, led-strips-colorful, smoky-pedestal) de dam bao khong lam hong cai dang chay tot.",
+  "params": {
+    "so_frame": 65,
+    "fps": 16,
+    "steps": 4,
+    "buoc_cao": 2,
+    "guidance": 1,
+    "lora": "t2v"
+  },
   "status": "cho_test"
 }

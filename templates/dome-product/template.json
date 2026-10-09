@@ -2,13 +2,26 @@
   "template_id": "dome-product",
   "source_video_url": "https://public-files-cdn.mojo.video/assets/ai/previews/before-after/compressed/dome-product.mp4",
   "source_video_local": "templates/dome-product/source.mp4",
-  "video_info": { "width": 720, "height": 1280, "fps": 24, "nb_frames": 128, "duration_s": 5.333 },
+  "video_info": {
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "nb_frames": 128,
+    "duration_s": 5.333
+  },
   "frame_image": "templates/dome-product/base.png",
   "frame_image_note": "Video co hieu ung quet sang (light-wipe) trai-sang-phai o dau: con vet mong sat canh phai o frame 18, het han ngay sau do. Lay frame 20: bo cuc day du va 'nguyen ven' (san pham dat tren be xoay, van con nam duoi chup thuy tinh, tay nguoi vua cham toi vien chup, nen gradient xanh-hong lam mo phia sau), chua co chuyen dong nhac chup len (dong tac nhac chi bat dau ro tu ~frame 28-30).",
   "effect_prompt": "A human hand reaches in from the top of frame and lifts a clear glass dome cover straight up and away from the product, revealing it fully. After the dome is removed, the round pedestal slowly rotates like a turntable, smoothly turning the product in place through a full rotation to reveal it from every angle, while the camera itself stays completely fixed. Soft, dreamy teal-to-peach gradient bokeh background throughout, gentle studio lighting, photorealistic advertisement cinematography.",
   "effect_prompt_note": "Qua cac frame 20->30: tay nguoi nhac chup thuy tinh thang len va ra khoi khung (frame 30 chup da nang len, frame 45 chup gan ra khoi khung tren). Sau khi chup duoc nhac di, be xoay (pedestal) tiep tuc quay tron nhu turntable: frame 60 thay mat sau/got, frame 75/90/105/120 lan luot thay cac goc nghieng va mat truoc san pham -- xac nhan la be xoay chu khong phai camera orbit (nen gradient mo phia sau khong doi huong/vi tri, chi co san pham xoay tai cho). Nen gradient xanh-hong giu nguyen tong mau xuyen suot, khong cycle mau manh nhu neon.",
-  "image_prompt": "In image 1, the orange leather pointed-toe high-heel pump is completely removed, including its toe, heel, insole and stitching, reflections and shadow, and nothing of its shape remains. In its place, the product from image 2 stands as the central hero product on the round pedestal beneath the glass dome, in the same position and at the same scale, resting exactly as the original shoe did. The product keeps its own shape and proportions from image 2 and does not take the shape of the shoe. Place the product centered on the pedestal inside the dome, matching the footprint and scale of the original shoe. Keep the exact design of the product from image 2, including its shape, color, material, texture and every detail, with only the text and logos that are printed on it in image 2; no lettering or markings from image 1 appear on it. Keep the glass dome, the round pedestal, the hand reaching to lift the dome, and the soft teal-to-peach gradient background exactly the same as image 1. The hand continues lifting the dome up and away to reveal the new product, and the pedestal keeps rotating to show it from every angle, as in image 1. Do not add any detail that is not in image 1 or image 2.",
-  "image_prompt_note": "{OLD_PRODUCT_DESC}=giay cao got mui nhon da mau cam. {SCENE_POSITION_DESC}=tren be xoay tron, ben trong chup thuy tinh. {PRESENTATION} dien thanh cau huong dan dat san pham o giua be, giu dung ty le/footprint. {SCENE_ELEMENTS} gom chup thuy tinh, be xoay, ban tay dang nhac chup va nen gradient -- base.png chi co dung luc chup con nguyen, chua co canh nhac chup ro ret nen EFFECT_CONTINUATION_DESC moi ta dong tac tiep theo (nhac chup + be xoay) cho phan video.",
-  "params": { "so_frame": 65, "fps": 16, "steps": 4, "buoc_cao": 2, "guidance": 1.0, "lora": "t2v" },
+  "image_prompt": "Replace the entire shoe in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.",
+  "image_prompt_note": "Viet lai 2026-10 LAN 2 theo cong thuc da duoc NGUOI DUNG tu tay xac nhan hoat dong tren golden-fireworks (ca KHO NHAT, 5 lan thu truoc deu that bai): 'Replace the entire X in the first image with the product from the second image, maintaining the second product's original size, proportions, and colors.' Day la cau LENH TRUC TIEP (imperative 'Replace'), ngan gon, KHONG mo ta vi tri/scene/anh sang gi them -- bang chung cho thay day moi la yeu to quyet dinh (khong phai tranh phu dinh nhu ket luan LAN 1 truoc do, vi ban 'tich cuc' lan 1 van that bai tren chinh golden-fireworks). Tat ca 12 template dong loat doi sang cong thuc nay; CHUA retest het, uu tien retest cac ca TUNG THANH CONG o ban cu (helicopter-city-product, led-strips-colorful, smoky-pedestal) de dam bao khong lam hong cai dang chay tot.",
+  "params": {
+    "so_frame": 65,
+    "fps": 16,
+    "steps": 4,
+    "buoc_cao": 2,
+    "guidance": 1,
+    "lora": "t2v"
+  },
   "status": "cho_test"
 }

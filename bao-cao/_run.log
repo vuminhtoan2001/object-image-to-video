@@ -1,64 +1,11 @@
-08:11:12 templates found: dome-product, golden-fireworks, helicopter-city-product, led-strips-colorful, liquid-gold, package-to-product-with-confetti, roses-smoke, smoke-reveal, smoky-pedestal, snow, water-electric-hues, water-splashes-light
-08:11:12 === STAGE 1: image generation (sequential, 1 GPU) ===
-08:11:12 dome-product [image] submitting...
-08:11:25 dome-product [image] denoise 0.75 10.4s
-08:11:36 dome-product [image] denoise 0.75 21.2s
-08:11:46 dome-product [image] denoise 0.75 31.6s
-08:11:56 dome-product [image] denoise 0.75 42s
-08:12:07 dome-product [image] denoise 0.75 52.7s
-08:12:17 dome-product [image] denoise 0.75 63.1s
-08:12:28 dome-product [image] denoise 0.75 73.4s
-08:12:39 dome-product [image] luu 1 84.3s
-08:12:49 dome-product [image] done 1 94.7s
-08:12:57 dome-product [image] DONE -> 740ffd4b5df8403486ee51baa214b000
-08:12:57 golden-fireworks [image] submitting...
-08:13:09 golden-fireworks [image] denoise 0.75 10.3s
-08:13:20 golden-fireworks [image] denoise 0.75 21.2s
-08:13:30 golden-fireworks [image] denoise 0.75 31.6s
-08:13:40 golden-fireworks [image] denoise 0.75 41.9s
-08:13:51 golden-fireworks [image] denoise 0.75 52.3s
-08:14:01 golden-fireworks [image] denoise 0.75 62.9s
-08:14:12 golden-fireworks [image] denoise 0.75 73.3s
-08:14:22 golden-fireworks [image] denoise 0.75 83.9s
-08:14:33 golden-fireworks [image] done 1 94.3s
-08:14:44 golden-fireworks [image] DONE -> 7e69b857b1e247639e887b9a2068172c
-08:14:44 helicopter-city-product [image] submitting...
-08:14:56 helicopter-city-product [image] denoise 0.75 10.3s
-08:15:06 helicopter-city-product [image] denoise 0.75 20.8s
-08:15:17 helicopter-city-product [image] denoise 0.75 31.2s
-08:15:27 helicopter-city-product [image] denoise 0.75 41.9s
-08:15:38 helicopter-city-product [image] denoise 0.75 52.2s
-08:15:48 helicopter-city-product [image] denoise 0.75 62.6s
-08:15:58 helicopter-city-product [image] denoise 0.75 72.9s
-08:16:09 helicopter-city-product [image] denoise 0.75 83.2s
-08:16:19 helicopter-city-product [image] done 1 93.7s
-08:16:24 helicopter-city-product [image] DONE -> 3f4306d4feb9415c8582fa118dcc5917
-08:16:24 led-strips-colorful [image] submitting...
-08:16:36 led-strips-colorful [image] denoise 0.75 10.4s
-08:16:46 led-strips-colorful [image] denoise 0.75 21s
-08:16:57 led-strips-colorful [image] denoise 0.75 31.3s
-08:17:07 led-strips-colorful [image] denoise 0.75 41.7s
-08:17:18 led-strips-colorful [image] denoise 0.75 52.3s
-08:17:28 led-strips-colorful [image] denoise 0.75 62.7s
-08:17:39 led-strips-colorful [image] denoise 0.75 73.1s
-08:17:49 led-strips-colorful [image] denoise 0.75 83.4s
-08:17:59 led-strips-colorful [image] done 1 93.8s
-08:18:04 led-strips-colorful [image] DONE -> 7321e6e20af14b618c56abd8f371595e
-08:18:04 liquid-gold [image] submitting...
-08:18:17 liquid-gold [image] queued 0 10.4s
-08:18:27 liquid-gold [image] queued 0 20.9s
-08:18:38 liquid-gold [image] queued 0 31.3s
-08:18:48 liquid-gold [image] queued 0 41.6s
-08:18:58 liquid-gold [image] queued 0 52s
-08:19:09 liquid-gold [image] queued 0 62.3s
-08:19:19 liquid-gold [image] queued 0 72.7s
-08:19:29 liquid-gold [image] queued 0 83s
-08:19:41 liquid-gold [image] denoise 0.75 93.4s
-08:19:51 liquid-gold [image] denoise 0.75 105s
-08:20:02 liquid-gold [image] denoise 0.75 115.3s
-08:20:12 liquid-gold [image] denoise 0.75 125.7s
-08:20:22 liquid-gold [image] denoise 0.75 136s
-08:20:33 liquid-gold [image] denoise 0.75 146.4s
-08:20:43 liquid-gold [image] denoise 0.75 156.7s
-08:20:53 liquid-gold [image] denoise 0.75 167.1s
-08:21:04 liquid-gold [image] luu 1 177.4s
+09:01:07 templates found: dome-product, golden-fireworks, helicopter-city-product, led-strips-colorful, liquid-gold, package-to-product-with-confetti, roses-smoke, smoke-reveal, smoky-pedestal, snow, water-electric-hues, water-splashes-light
+09:01:07 === STAGE 1: image generation (sequential, 1 GPU) ===
+09:01:07 dome-product [image] submitting...
+09:01:20 dome-product [image] denoise 0.75 10.4s
+09:01:30 dome-product [image] denoise 0.75 21s
+09:01:41 dome-product [image] denoise 0.75 31.4s
+09:01:51 dome-product [image] denoise 0.75 41.8s
+09:02:01 dome-product [image] denoise 0.75 52.2s
+09:02:12 dome-product [image] denoise 0.75 62.6s
+09:02:22 dome-product [image] denoise 0.75 73s
+09:02:33 dome-product [image] denoise 0.75 83.4s
