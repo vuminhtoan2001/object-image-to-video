@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tạo video sản phẩm từ template</title>
+<style>
+:root {
+  --nen: #f6f6f4; --the: #ffffff; --chu: #1c1c1a; --mo: #6b6b66; --vien: #e2e1dc;
+  --nhan: #2f5bd3; --nhan-chu: #ffffff; --ok: #1f7a4d; --loi: #b42318; --canh: #9a6700;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nen: #151514; --the: #1f1f1d; --chu: #ececea; --mo: #9d9d97; --vien: #34342f;
+    --nhan: #7b9cff; --nhan-chu: #10131c; --ok: #5cc493; --loi: #ff8a7a; --canh: #e3b341;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--nen); color: var(--chu);
+       font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 14px 20px; border-bottom: 1px solid var(--vien); background: var(--the);
+         display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+header h1 { font-size: 16px; margin: 0 12px 0 0; }
+header .srv { display: flex; gap: 6px; align-items: center; }
+header .srv input { width: 260px; }
+main { max-width: 900px; margin: 0 auto; padding: 16px 20px 60px; }
+section { background: var(--the); border: 1px solid var(--vien); border-radius: 10px;
+          padding: 14px; margin-bottom: 14px; }
+section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--mo);
+             margin: 0 0 10px; display: flex; justify-content: space-between; align-items: center; }
+label { display: block; font-weight: 600; margin: 10px 0 4px; }
+label small, .mo { color: var(--mo); font-weight: 400; }
+input, select, textarea { width: 100%; padding: 7px 9px; border: 1px solid var(--vien);
+  border-radius: 7px; background: var(--nen); color: var(--chu); font: inherit; }
+textarea { min-height: 90px; resize: vertical; font: 13px/1.5 ui-monospace, Consolas, monospace; }
+textarea.preview { min-height: 70px; opacity: .75; }
+button { padding: 7px 12px; border: 1px solid var(--vien); border-radius: 7px; background: var(--the);
+         color: var(--chu); font: inherit; cursor: pointer; white-space: nowrap; }
+button:hover { border-color: var(--nhan); }
+button.chinh { background: var(--nhan); color: var(--nhan-chu); border-color: var(--nhan); font-weight: 600; }
+button:disabled { opacity: .5; cursor: default; }
+.hang { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.hang > .gian { flex: 1; min-width: 0; }
+.luoi4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (max-width: 640px) { .luoi4 { grid-template-columns: repeat(2, 1fr); } header .srv input { width: 180px; } }
+.ok { color: var(--ok); } .loi { color: var(--loi); } .canh { color: var(--canh); }
+.xem { margin-top: 6px; min-height: 140px; max-height: 420px; border: 1px dashed var(--vien); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--mo); font-size: 12px; }
+.xem img, .xem video { max-width: 100%; max-height: 400px; }
+.thanh { height: 4px; background: var(--vien); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.thanh > div { height: 100%; width: 0; background: var(--nhan); transition: width .3s; }
+#tien-do-1, #tien-do-2 { margin-top: 8px; font: 12px/1.5 ui-monospace, Consolas, monospace; color: var(--mo); white-space: pre-wrap; }
+.buoc2 { opacity: .45; pointer-events: none; }
+.buoc2.mo-khoa { opacity: 1; pointer-events: auto; }
+code { background: var(--nen); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Tạo video sản phẩm từ template</h1>
+  <div class="srv">
+    <span class="mo">Ảnh (AccessoryFluxLab):</span>
+    <input id="srv-img" placeholder="https://xxx.trycloudflare.com">
+    <button id="nut-kiem-img">Kiểm tra</button>
+    <span id="tt-img" class="mo"></span>
+  </div>
+  <div class="srv">
+    <span class="mo">Video (ImageToVideo_Wan22):</span>
+    <input id="srv-vid" placeholder="https://yyy.trycloudflare.com">
+    <button id="nut-kiem-vid">Kiểm tra</button>
+    <span id="tt-vid" class="mo"></span>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>1. Chọn template</h2>
+    <div class="hang">
+      <button id="nut-chon-thu-muc" class="chinh">Chọn thư mục templates/</button>
+      <select id="chon-template" class="gian" disabled><option>— chưa nạp —</option></select>
+    </div>
+    <div id="tt-thu-muc" class="mo" style="margin-top:6px;font-size:12px"></div>
+
+    <div class="hang" style="align-items:flex-start;margin-top:10px">
+      <div class="gian">
+        <label>Ảnh nền gốc (base.png) <small>— "image 1" khi sinh ảnh</small></label>
+        <div class="xem" id="xem-base">chưa chọn template</div>
+      </div>
+      <div class="gian">
+        <label>Video mẫu gốc <small>(tham khảo hiệu ứng, không gửi lên server)</small></label>
+        <div class="xem" id="xem-source-video">chưa chọn template</div>
+      </div>
+    </div>
+
+    <label>Prompt sinh ẢNH <small>("image 1" = ảnh nền này · "image 2" = sản phẩm upload bên dưới)</small></label>
+    <textarea id="image-prompt" spellcheck="false" placeholder="Chọn template để nạp prompt"></textarea>
+
+    <label>Hiệu ứng riêng của template (chỉ mô tả nền/camera) <small>— KHÔNG nhắc gì về sản phẩm</small></label>
+    <textarea id="effect-prompt" spellcheck="false" placeholder="Chọn template để nạp prompt"></textarea>
+    <label>Câu cố định (giữ nguyên sản phẩm) <small>— dùng chung mọi template, từ <code>_shared.json</code></small></label>
+    <textarea id="shared-clause" spellcheck="false"></textarea>
+    <label>→ Prompt chuyển động cuối cùng gửi đi khi tạo video <small>(hiệu ứng + câu cố định, chỉ xem)</small></label>
+    <textarea id="chuyen-dong-full" class="preview" readonly></textarea>
+
+    <label>Tham số video</label>
+    <div class="luoi4">
+      <div><label style="margin:0">so_frame</label><input id="p-so-frame" type="number"></div>
+      <div><label style="margin:0">fps</label><input id="p-fps" type="number"></div>
+      <div><label style="margin:0">steps</label><input id="p-steps" type="number"></div>
+      <div><label style="margin:0">buoc_cao</label><input id="p-buoc-cao" type="number"></div>
+    </div>
+
+    <div class="hang" style="margin-top:10px">
+      <span class="gian"></span>
+      <button id="nut-tai-json">Tải template.json đã sửa</button>
+    </div>
+    <div id="tt-luu" class="mo" style="font-size:12px"></div>
+  </section>
+
+  <section>
+    <h2>2. Sản phẩm mới (ảnh 2)</h2>
+    <input type="file" id="tep-san-pham" accept="image/*">
+    <div class="xem" id="xem-san-pham" style="margin-top:8px">chưa chọn ảnh</div>
+  </section>
+
+  <section>
+    <h2>3. Tạo ảnh xem trước (accessory_flux_lab)</h2>
+    <div class="luoi4">
+      <div><label style="margin:0">seed</label><input id="img-seed" type="number" value="42"></div>
+      <div><label style="margin:0">ngân sách cạnh</label><input id="img-ngan-sach" type="number" min="512" max="1536" step="64" value="1024"></div>
+      <div><label style="margin:0">steps <small>(trống = mặc định)</small></label><input id="img-steps" type="number" min="1" max="60"></div>
+      <div style="display:flex;align-items:flex-end"><button id="nut-tao-anh" class="chinh" style="width:100%">Tạo ảnh</button></div>
+    </div>
+    <div class="thanh"><div id="thanh-1"></div></div>
+    <div id="tien-do-1"></div>
+    <div class="xem" id="xem-ket-qua-anh" style="margin-top:8px">chưa có kết quả</div>
+  </section>
+
+  <section id="khung-buoc-2" class="buoc2">
+    <h2>4. Tạo video xem trước (image_to_video_wan22)</h2>
+    <div class="hang">
+      <span class="mo gian" id="goi-y-video">Cần có ảnh xem trước ở bước 3 trước.</span>
+      <button id="nut-tao-video" class="chinh">Tạo video</button>
+    </div>
+    <div class="thanh"><div id="thanh-2"></div></div>
+    <div id="tien-do-2"></div>
+    <div class="xem" id="xem-ket-qua-video" style="margin-top:8px">chưa có kết quả</div>
+  </section>
+</main>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const KHO = {
+  doc(k, md) { try { const v = localStorage.getItem('tvsp_' + k); return v === null ? md : JSON.parse(v); } catch (e) { return md; } },
+  ghi(k, v) { try { localStorage.setItem('tvsp_' + k, JSON.stringify(v)); } catch (e) {} },
+};
+
+// ---------------------------------------------------------------- server URLs
+const srvUrl = id => $(id).value.trim().replace(/\/+$/, '');
+$('#srv-img').value = KHO.doc('srv_img', '');
+$('#srv-vid').value = KHO.doc('srv_vid', '');
+$('#srv-img').addEventListener('change', () => KHO.ghi('srv_img', srvUrl('#srv-img')));
+$('#srv-vid').addEventListener('change', () => KHO.ghi('srv_vid', srvUrl('#srv-vid')));
+
+async function goi(base, duong, opt) {
+  if (!base) throw new Error('chưa nhập server URL');
+  let r;
+  try { r = await fetch(base + duong, opt); }
+  catch (e) { throw new Error('không gọi được ' + base + ' (tắt rồi, sai URL, hoặc thiếu CORS trên server đó)'); }
+  const txt = await r.text();
+  let j; try { j = JSON.parse(txt); } catch (e) { j = { raw: txt.slice(0, 300) }; }
+  if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + (j.detail || j.raw || txt).toString().slice(0, 400));
+  return j;
+}
+async function kiemServer(idInput, idTt) {
+  const tt = $(idTt), u = srvUrl(idInput);
+  tt.className = 'mo'; tt.textContent = 'đang kiểm tra...';
+  try {
+    const h = await goi(u, '/health');
+    tt.className = h.models_ready ? 'ok' : 'canh';
+    tt.textContent = `${h.notebook} ${h.notebook_version} · ${h.models_ready ? 'sẵn sàng' : 'CHƯA sẵn sàng'} · ${h.active_jobs} job`;
+  } catch (e) { tt.className = 'loi'; tt.textContent = e.message; }
+}
+$('#nut-kiem-img').onclick = () => kiemServer('#srv-img', '#tt-img');
+$('#nut-kiem-vid').onclick = () => kiemServer('#srv-vid', '#tt-vid');
+if (srvUrl('#srv-img')) kiemServer('#srv-img', '#tt-img');
+if (srvUrl('#srv-vid')) kiemServer('#srv-vid', '#tt-vid');
+
+// ---------------------------------------------------------------- nap thu muc templates/
+let TEMPLATES = {};   // id -> { json, baseFile, baseUrl, jsonFile }
+let SHARED = { preserve_product_clause: '' };
+
+function hienAnh(el, src) {
+  el.innerHTML = '';
+  if (!src) { el.textContent = 'chưa có ảnh'; return; }
+  const i = new Image(); i.src = src;
+  i.onerror = () => { el.textContent = 'không mở được ảnh'; };
+  el.appendChild(i);
+}
+function hienVideo(el, src) {
+  el.innerHTML = '';
+  if (!src) { el.textContent = 'chưa có video'; return; }
+  const v = document.createElement('video'); v.src = src; v.controls = true;
+  el.appendChild(v);
+}
+
+$('#nut-chon-thu-muc').onclick = () => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.webkitdirectory = true; inp.multiple = true;
+  inp.onchange = async () => {
+    const files = Array.from(inp.files);
+    if (!files.length) return;
+    TEMPLATES = {}; SHARED = { preserve_product_clause: '' };
+    const byDir = {};
+    for (const f of files) {
+      const parts = f.webkitRelativePath.split('/');   // templates/<id>/<file> hoac templates/_shared.json
+      if (parts.length === 2 && parts[1] === '_shared.json') {
+        try { SHARED = JSON.parse(await f.text()); } catch (e) {}
+        continue;
+      }
+      if (parts.length < 3) continue;
+      const id = parts[1];
+      (byDir[id] = byDir[id] || {})[parts[2]] = f;
+    }
+    for (const id in byDir) {
+      const g = byDir[id];
+      if (!g['template.json']) continue;
+      let json; try { json = JSON.parse(await g['template.json'].text()); } catch (e) { continue; }
+      TEMPLATES[id] = { json, jsonFile: g['template.json'],
+                        baseFile: g['base.png'] || null,
+                        videoFile: g['source.mp4'] || null };
+    }
+    const sel = $('#chon-template');
+    sel.innerHTML = '';
+    const ids = Object.keys(TEMPLATES);
+    if (!ids.length) { $('#tt-thu-muc').textContent = 'Không thấy template.json nào trong thư mục đã chọn (chọn đúng thư mục templates/).'; sel.disabled = true; return; }
+    ids.forEach(id => { const o = document.createElement('option'); o.value = id; o.textContent = id; sel.appendChild(o); });
+    sel.disabled = false;
+    $('#tt-thu-muc').textContent = `Đã nạp ${ids.length} template.` + (SHARED.preserve_product_clause ? '' : ' (KHÔNG thấy _shared.json — câu cố định để trống, tự điền tay)');
+    chonTemplate(ids[0]);
+  };
+  inp.click();
+};
+$('#chon-template').onchange = () => chonTemplate($('#chon-template').value);
+
+let templateHienTai = null;
+
+function chonTemplate(id) {
+  templateHienTai = id;
+  const t = TEMPLATES[id]; if (!t) return;
+  const j = t.json;
+  $('#image-prompt').value = j.image_prompt || '';
+  $('#effect-prompt').value = j.effect_prompt || '';
+  $('#shared-clause').value = SHARED.preserve_product_clause || '';
+  veChuyenDongFull();
+  const p = j.params || {};
+  $('#p-so-frame').value = p.so_frame ?? '';
+  $('#p-fps').value = p.fps ?? '';
+  $('#p-steps').value = p.steps ?? '';
+  $('#p-buoc-cao').value = p.buoc_cao ?? '';
+  if (t.baseFile) { const u = URL.createObjectURL(t.baseFile); hienAnh($('#xem-base'), u); }
+  else $('#xem-base').textContent = 'template này chưa có base.png';
+  if (t.videoFile) { const u = URL.createObjectURL(t.videoFile); hienVideo($('#xem-source-video'), u); }
+  else $('#xem-source-video').textContent = 'không có source.mp4';
+  // reset ket qua cac buoc khi doi template
+  $('#xem-ket-qua-anh').textContent = 'chưa có kết quả';
+  $('#xem-ket-qua-video').textContent = 'chưa có kết quả';
+  khoaBuoc2(false);
+  jobAnhHienTai = null;
+}
+function veChuyenDongFull() {
+  const a = $('#effect-prompt').value.trim(), b = $('#shared-clause').value.trim();
+  $('#chuyen-dong-full').value = [a, b].filter(Boolean).join(' ');
+}
+$('#effect-prompt').addEventListener('input', veChuyenDongFull);
+$('#shared-clause').addEventListener('input', veChuyenDongFull);
+
+$('#nut-tai-json').onclick = () => {
+  const t = TEMPLATES[templateHienTai]; if (!t) return alert('Chưa chọn template');
+  const j = { ...t.json };
+  j.image_prompt = $('#image-prompt').value.trim();
+  j.effect_prompt = $('#effect-prompt').value.trim();
+  j.params = { ...(j.params || {}),
+    so_frame: numHoacBo($('#p-so-frame').value), fps: numHoacBo($('#p-fps').value),
+    steps: numHoacBo($('#p-steps').value), buoc_cao: numHoacBo($('#p-buoc-cao').value) };
+  const s = JSON.stringify(j, null, 2) + '\n';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([s], { type: 'application/json' }));
+  a.download = 'template.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  $('#tt-luu').textContent = `Đã tải template.json — chép đè vào templates/${templateHienTai}/template.json để lưu thật.`;
+};
+function numHoacBo(v) { v = v.trim(); return v === '' ? undefined : Number(v); }
+
+// ---------------------------------------------------------------- anh san pham (image 2)
+let sanPhamBase64 = null;
+function docTepAnh(f) {
+  return new Promise((ok, hong) => {
+    const r = new FileReader();
+    r.onerror = () => hong(new Error('FileReader lỗi'));
+    r.onload = () => {
+      const i = new Image();
+      i.onerror = () => hong(new Error('không phải ảnh'));
+      i.onload = () => {
+        const canh = Math.max(i.width, i.height);
+        if (canh <= 2048) return ok(r.result);
+        const s = 2048 / canh, c = document.createElement('canvas');
+        c.width = Math.round(i.width * s); c.height = Math.round(i.height * s);
+        c.getContext('2d').drawImage(i, 0, 0, c.width, c.height);
+        const trongSuot = /png|webp|gif/.test(f.type);
+        ok(c.toDataURL(trongSuot ? 'image/png' : 'image/jpeg', 0.92));
+      };
+      i.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+$('#tep-san-pham').onchange = async () => {
+  const f = $('#tep-san-pham').files[0]; if (!f) return;
+  try { sanPhamBase64 = await docTepAnh(f); hienAnh($('#xem-san-pham'), sanPhamBase64); }
+  catch (e) { alert('Không đọc được ảnh: ' + e.message); }
+};
+
+// ---------------------------------------------------------------- buoc 3: tao anh
+async function docBase64TuFile(f) {
+  return new Promise((ok, hong) => {
+    const r = new FileReader();
+    r.onload = () => ok(r.result);
+    r.onerror = () => hong(new Error('đọc base.png lỗi'));
+    r.readAsDataURL(f);
+  });
+}
+async function chayJob(base, duong, than, capNhat) {
+  const t0 = Date.now();
+  const j = await goi(base, duong, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(than) });
+  let s;
+  for (;;) {
+    await new Promise(r => setTimeout(r, 2500));
+    s = await goi(base, '/jobs/' + j.job_id);
+    capNhat(s.progress || 0, `job ${j.job_id.slice(0, 8)} · ${s.stage} · ${((Date.now() - t0) / 1000).toFixed(0)}s`);
+    if (s.status !== 'processing') break;
+  }
+  if (s.status === 'error') throw new Error(s.error + (s.where ? '\n' + s.where : ''));
+  return { id: j.job_id, so_lieu: s.so_lieu || {} };
+}
+
+let jobAnhHienTai = null;   // { id, server }
+function khoaBuoc2(moKhoa) {
+  $('#khung-buoc-2').classList.toggle('mo-khoa', moKhoa);
+  $('#goi-y-video').textContent = moKhoa ? '' : 'Cần có ảnh xem trước ở bước 3 trước.';
+}
+
+$('#nut-tao-anh').onclick = async () => {
+  const td = $('#tien-do-1'), thanh = $('#thanh-1'), btn = $('#nut-tao-anh');
+  const base = srvUrl('#srv-img');
+  const t = TEMPLATES[templateHienTai];
+  try {
+    if (!base) throw new Error('chưa nhập server URL ảnh (AccessoryFluxLab)');
+    if (!t) throw new Error('chưa chọn template');
+    if (!t.baseFile) throw new Error('template này chưa có base.png');
+    if (!sanPhamBase64) throw new Error('chưa upload ảnh sản phẩm (mục 2)');
+    const prompt = $('#image-prompt').value.trim();
+    if (!prompt) throw new Error('prompt sinh ảnh đang trống');
+    btn.disabled = true; thanh.style.width = '2%'; td.textContent = 'đang đọc base.png...';
+    const anhNen = await docBase64TuFile(t.baseFile);
+    const than = {
+      anh_nguoi_base64: anhNen,
+      anh_phu_kien_base64: sanPhamBase64,
+      prompt,
+      test_case: 'tool-' + templateHienTai,
+      seed: +$('#img-seed').value || 42,
+      ngan_sach_canh: +$('#img-ngan-sach').value || 1024,
+    };
+    if ($('#img-steps').value) than.steps = +$('#img-steps').value;
+    const { id } = await chayJob(base, '/generate/accessory_flux_lab', than, (p, txt) => {
+      thanh.style.width = Math.max(2, p * 100) + '%'; td.textContent = txt;
+    });
+    thanh.style.width = '100%'; td.innerHTML = '<span class="ok">xong</span>';
+    const src = base + '/jobs/' + id + '/result';
+    hienAnh($('#xem-ket-qua-anh'), src);
+    jobAnhHienTai = { id, server: base };
+    khoaBuoc2(true);
+  } catch (e) {
+    td.innerHTML = '<span class="loi"></span>'; td.firstChild.textContent = e.message; thanh.style.width = '0';
+  } finally { btn.disabled = false; }
+};
+
+// ---------------------------------------------------------------- buoc 4: tao video
+$('#nut-tao-video').onclick = async () => {
+  const td = $('#tien-do-2'), thanh = $('#thanh-2'), btn = $('#nut-tao-video');
+  const base = srvUrl('#srv-vid');
+  try {
+    if (!base) throw new Error('chưa nhập server URL video (ImageToVideo_Wan22)');
+    if (!jobAnhHienTai) throw new Error('chưa có ảnh xem trước ở bước 3');
+    const chuyenDong = $('#chuyen-dong-full').value.trim();
+    if (!chuyenDong) throw new Error('chuyển động đang trống');
+    btn.disabled = true; thanh.style.width = '2%'; td.textContent = 'đang gửi job...';
+    const than = {
+      anh_url: jobAnhHienTai.server + '/jobs/' + jobAnhHienTai.id + '/result',
+      chuyen_dong: chuyenDong,
+      test_case: 'tool-' + templateHienTai,
+    };
+    const num = id => { const v = $(id).value.trim(); return v === '' ? undefined : Number(v); };
+    const so_frame = num('#p-so-frame'), fps = num('#p-fps'), steps = num('#p-steps'), buoc_cao = num('#p-buoc-cao');
+    if (so_frame !== undefined) than.so_frame = so_frame;
+    if (fps !== undefined) than.fps = fps;
+    if (steps !== undefined) than.steps = steps;
+    if (buoc_cao !== undefined) than.buoc_cao = buoc_cao;
+    const { id } = await chayJob(base, '/generate/image_to_video_wan22', than, (p, txt) => {
+      thanh.style.width = Math.max(2, p * 100) + '%'; td.textContent = txt;
+    });
+    thanh.style.width = '100%'; td.innerHTML = '<span class="ok">xong</span>';
+    hienVideo($('#xem-ket-qua-video'), base + '/jobs/' + id + '/result');
+  } catch (e) {
+    td.innerHTML = '<span class="loi"></span>'; td.firstChild.textContent = e.message; thanh.style.width = '0';
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>
