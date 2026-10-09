@@ -1,0 +1,54 @@
+{
+  "ok": [
+    {
+      "id": "dome-product",
+      "imageJobId": "9376279b91914c169756913b65bfe5a3"
+    },
+    {
+      "id": "golden-fireworks",
+      "imageJobId": "db1b813ab2e6462b845f5c3cbb4da2e2"
+    }
+  ],
+  "failed": [
+    {
+      "id": "helicopter-city-product",
+      "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+    },
+    {
+      "id": "led-strips-colorful",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "liquid-gold",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "package-to-product-with-confetti",
+      "error": "HTTP 500: Error: Network connection lost.\n    at async handleRequest (index.js:1402:18)\n    at async handle (index.js:1741:12)\n    at async Object.fetch (index.js:1752:14)"
+    },
+    {
+      "id": "roses-smoke",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "smoke-reveal",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "smoky-pedestal",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "snow",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "water-electric-hues",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    },
+    {
+      "id": "water-splashes-light",
+      "error": "HTTP 530: <!DOCTYPE html>\n\n\n\n <html class=\"no-js\" lang=\"en-US\"> \n<head>\n<title>Cloudflare Tunnel error | masters-spy-collaborative-robert.trycloudflare.com | Cloudflare</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" con"
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo test template video sản phẩm</title>
+<style>
+:root {
+  --nen: #f6f6f4; --the: #ffffff; --chu: #1c1c1a; --mo: #6b6b66; --vien: #e2e1dc;
+  --nhan: #2f5bd3; --ok: #1f7a4d; --loi: #b42318; --canh: #9a6700;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nen: #151514; --the: #1f1f1d; --chu: #ececea; --mo: #9d9d97; --vien: #34342f;
+    --nhan: #7b9cff; --ok: #5cc493; --loi: #ff8a7a; --canh: #e3b341;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--nen); color: var(--chu);
+       font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 14px 20px; border-bottom: 1px solid var(--vien); background: var(--the);
+         display: flex; gap: 12px; align-items: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 5; }
+header h1 { font-size: 16px; margin: 0 12px 0 0; }
+button { padding: 7px 12px; border: 1px solid var(--vien); border-radius: 7px; background: var(--the);
+         color: var(--chu); font: inherit; cursor: pointer; }
+button:hover { border-color: var(--nhan); }
+#tt { color: var(--mo); font-size: 13px; }
+main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 60px; }
+.card { background: var(--the); border: 1px solid var(--vien); border-radius: 10px;
+        padding: 16px; margin-bottom: 16px; }
+.card h2 { font-size: 15px; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; text-transform: uppercase; letter-spacing: .03em; }
+.b-ok { background: #1f7a4d22; color: var(--ok); }
+.b-wait { background: #9a670022; color: var(--canh); }
+.sub { color: var(--mo); font-size: 12px; margin-bottom: 10px; }
+.cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+@media (max-width: 800px) { .cols { grid-template-columns: repeat(2, 1fr); } }
+.slot { border: 1px dashed var(--vien); border-radius: 8px; overflow: hidden; display: flex;
+        flex-direction: column; }
+.slot .lbl { font-size: 11px; color: var(--mo); padding: 4px 6px; border-bottom: 1px dashed var(--vien); }
+.slot .box { flex: 1; min-height: 130px; display: flex; align-items: center; justify-content: center;
+             background: var(--nen); overflow: hidden; }
+.slot img, .slot video { max-width: 100%; max-height: 220px; display: block; cursor: zoom-in; }
+.slot .empty { color: var(--mo); font-size: 12px; padding: 10px; text-align: center; }
+details { margin-top: 4px; }
+summary { cursor: pointer; font-size: 12px; color: var(--mo); }
+pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, Consolas, monospace; background: var(--nen);
+      padding: 8px; border-radius: 6px; margin: 6px 0 0; max-height: 220px; overflow: auto; }
+.variants { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.variants .slot { width: 110px; flex: none; }
+.variants .box { min-height: 90px; }
+.variants img { max-height: 90px; }
+#phong { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center;
+         justify-content: center; z-index: 9; cursor: zoom-out; }
+#phong img, #phong video { max-width: 96vw; max-height: 96vh; }
+.trong { text-align: center; color: var(--mo); padding: 40px 10px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Báo cáo test template video sản phẩm</h1>
+  <button id="nut-chon" >Chọn thư mục project</button>
+  <span id="tt">chưa nạp — bấm chọn thư mục gốc (chứa cả templates/ và bao-cao/)</span>
+</header>
+<main id="main"><div class="trong">Chọn thư mục project để xem báo cáo.</div></main>
+<div id="phong"></div>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+
+function srcFromFile(f) { return URL.createObjectURL(f); }
+
+$('#nut-chon').onclick = () => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.webkitdirectory = true; inp.multiple = true;
+  inp.onchange = async () => {
+    const files = Array.from(inp.files);
+    if (!files.length) return;
+    const templates = {};   // id -> { json, baseFile }
+    const reports = {};     // id -> { product, preview:[{label,file}], video:[{label,file}] }
+    let productFile = null, sharedJson = null;
+
+    for (const f of files) {
+      const parts = f.webkitRelativePath.split('/');
+      // templates/<id>/<file>  or  templates/_shared.json
+      if (parts.length >= 2 && parts[0] === 'templates') {
+        if (parts.length === 2 && parts[1] === '_shared.json') {
+          try { sharedJson = JSON.parse(await f.text()); } catch (e) {}
+          continue;
+        }
+        if (parts.length === 3) {
+          const id = parts[1];
+          (templates[id] = templates[id] || {})[parts[2]] = f;
+        }
+      }
+      // bao-cao/<id>/<file>  or  bao-cao/product.png
+      if (parts.length >= 2 && parts[0] === 'bao-cao') {
+        if (parts.length === 2 && /^product/.test(parts[1])) { productFile = f; continue; }
+        if (parts.length === 3) {
+          const id = parts[1];
+          const r = (reports[id] = reports[id] || { preview: [], video: [] });
+          if (/^test_preview_image/.test(parts[2])) r.preview.push({ name: parts[2], file: f });
+          else if (/^test_result/.test(parts[2])) r.video.push({ name: parts[2], file: f });
+        }
+      }
+    }
+
+    const ids = Object.keys(templates).filter(id => templates[id]['template.json']).sort();
+    if (!ids.length) {
+      $('#tt').textContent = 'Không thấy templates/<id>/template.json nào — chọn đúng thư mục gốc project.';
+      return;
+    }
+    $('#tt').textContent = `Đã nạp ${ids.length} template${productFile ? ' · ảnh sản phẩm test: ' + productFile.name : ''}`;
+
+    const parsed = {};
+    for (const id of ids) {
+      try { parsed[id] = JSON.parse(await templates[id]['template.json'].text()); }
+      catch (e) { parsed[id] = null; }
+    }
+
+    render(ids, parsed, templates, reports, productFile);
+  };
+  inp.click();
+};
+
+function openZoom(src, isVideo) {
+  const p = $('#phong');
+  p.innerHTML = isVideo ? `<video src="${src}" controls autoplay></video>` : `<img src="${src}">`;
+  p.style.display = 'flex';
+}
+$('#phong').onclick = e => { if (e.target.id === 'phong') { $('#phong').style.display = 'none'; $('#phong').innerHTML = ''; } };
+
+function slot(label, file, isVideo) {
+  const d = document.createElement('div'); d.className = 'slot';
+  const l = document.createElement('div'); l.className = 'lbl'; l.textContent = label;
+  const b = document.createElement('div'); b.className = 'box';
+  if (file) {
+    const src = srcFromFile(file);
+    if (isVideo) {
+      const v = document.createElement('video'); v.src = src; v.muted = true;
+      v.onclick = () => openZoom(src, true);
+      b.appendChild(v);
+    } else {
+      const i = document.createElement('img'); i.src = src;
+      i.onclick = () => openZoom(src, false);
+      b.appendChild(i);
+    }
+  } else {
+    const e = document.createElement('div'); e.className = 'empty'; e.textContent = 'chưa có';
+    b.appendChild(e);
+  }
+  d.appendChild(l); d.appendChild(b);
+  return d;
+}
+
+function render(ids, parsed, templates, reports, productFile) {
+  const main = $('#main');
+  main.innerHTML = '';
+  for (const id of ids) {
+    const tpl = parsed[id];
+    const rep = reports[id] || { preview: [], video: [] };
+    const card = document.createElement('div'); card.className = 'card';
+
+    const h2 = document.createElement('h2');
+    const hasMain = rep.preview.some(p => p.name === 'test_preview_image.png') &&
+                    rep.video.some(v => v.name === 'test_result.mp4');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (hasMain ? 'b-ok' : 'b-wait');
+    badge.textContent = hasMain ? 'đã test' : 'chưa đủ';
+    h2.textContent = id + '  '; h2.appendChild(badge);
+    if (tpl && tpl.status) {
+      const st = document.createElement('span'); st.className = 'sub'; st.style.marginBottom = '0';
+      st.textContent = '· trạng thái: ' + tpl.status;
+      h2.appendChild(st);
+    }
+    card.appendChild(h2);
+
+    if (tpl && tpl.frame_image_note) {
+      const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = tpl.frame_image_note;
+      card.appendChild(sub);
+    }
+
+    const cols = document.createElement('div'); cols.className = 'cols';
+    cols.appendChild(slot('Ảnh nền template (base.png)', templates[id] && templates[id]['base.png']));
+    cols.appendChild(slot('Sản phẩm thay thế', productFile));
+    const mainPreview = rep.preview.find(p => p.name === 'test_preview_image.png');
+    cols.appendChild(slot('Ảnh preview (sinh ra)', mainPreview && mainPreview.file));
+    const mainVideo = rep.video.find(v => v.name === 'test_result.mp4');
+    cols.appendChild(slot('Video kết quả', mainVideo && mainVideo.file, true));
+    card.appendChild(cols);
+
+    const otherPreviews = rep.preview.filter(p => p.name !== 'test_preview_image.png');
+    if (otherPreviews.length) {
+      const lbl = document.createElement('div'); lbl.className = 'sub'; lbl.textContent = 'Các lần thử ảnh khác:';
+      card.appendChild(lbl);
+      const row = document.createElement('div'); row.className = 'variants';
+      otherPreviews.forEach(p => row.appendChild(slot(p.name, p.file)));
+      card.appendChild(row);
+    }
+
+    if (tpl) {
+      const det1 = document.createElement('details');
+      det1.innerHTML = '<summary>image_prompt (dùng để sinh ảnh)</summary>';
+      const pre1 = document.createElement('pre'); pre1.textContent = tpl.image_prompt || '(trống)';
+      det1.appendChild(pre1); card.appendChild(det1);
+
+      const det2 = document.createElement('details');
+      det2.innerHTML = '<summary>effect_prompt (phần riêng, dùng để sinh video)</summary>';
+      const pre2 = document.createElement('pre'); pre2.textContent = tpl.effect_prompt || '(trống)';
+      det2.appendChild(pre2); card.appendChild(det2);
+    }
+
+    main.appendChild(card);
+  }
+}
+</script>
+</body>
+</html>
