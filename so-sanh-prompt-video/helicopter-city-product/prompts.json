@@ -1,0 +1,45 @@
+{
+  "template_id": "helicopter-city-product",
+  "source_verify_note": "Xem lai source.mp4 LAN 2, do SAT tung 5 khung mot (20->25->30->35->45): phat hien quan trong BI BO SOT truoc do -- nen phia sau KHONG CHI 'doi sang thanh pho khac', ma la mot cu PAN NGANG THAT SU va LIEN TUC tu PHAI SANG TRAI: 1 toa nha dinh nhon (kieu Empire State) di chuyen dan tu ria phai (frame 20) ve giua (frame 30) roi thoat han khoi canh trai (frame 45), dong thoi 1 toa thap moi (kieu CN Tower) tien vao tu ria phai. Day la bang chung RO RET ve 1 pha trai ngang muot, khong phai cat canh dot ngot. v1-v4 chua tung mo ta ro 'trai ngang tu phai sang trai', chi noi chung chung 'doi/thay doi' -- co le day la ly do model chua tao duoc cam giac bay nhanh ro ret. v5 viet lai de mo ta dung dieu nay.",
+  "base_image": "test_preview_image.png",
+  "versions": [
+    {
+      "key": "v1",
+      "label": "v1 - đang dùng trong templates/ (ngắn gọn, đúng sát video gốc)",
+      "prompt": "The helicopter flies steadily through a cloudy sky with its rotor blades spinning, carrying the product suspended beneath it on thin cables that sway gently with natural motion. The camera stays locked in a fixed framing relative to the helicopter and the suspended product, while the clouds drift and the city skyline below continuously changes, passing beneath as if flying over different cityscapes. Soft atmospheric haze, photorealistic aerial cinematography, consistent composition throughout.",
+      "video": "video_v1.mp4"
+    },
+    {
+      "key": "v2",
+      "label": "v2 - thử thêm kịch tính KHÔNG có trong video gốc (mũi xuống, sương mù, tốc độ cao)",
+      "prompt": "The helicopter surges forward through a cloudy sky, its nose pitched sharply downward and its rotors spinning into a blur. Suspended beneath it by slender cables, the payload trails slightly backward in the powerful slipstream, swaying with the momentum of high-speed flight. A camera tracks alongside at the same speed, keeping both the helicopter and the payload steady within the frame. Clouds race from front to back and wisps of mist sweep across the shot, creating a motion-blur effect, while the city skyline below seems to recede rapidly; rooftops and streets flash by as new areas come into view. Brilliant daylight mingles with the light atmospheric haze, producing aerial footage that is as vivid, authentic, and dramatic as a high-speed chase sequence.",
+      "video": "video_v2.mp4"
+    },
+    {
+      "key": "v3",
+      "label": "v3 - giữ đúng cơ chế thật (nền đổi), chỉ nhấn mạnh TỐC ĐỘ NHANH, không bịa thêm vật lý",
+      "prompt": "The helicopter flies steadily through a cloudy sky, its rotor blades spinning, carrying the product suspended beneath it on thin cables that sway gently. The camera stays locked in a fixed framing relative to the helicopter and the suspended product. Below, the city skyline rushes past quickly, changing rapidly from one cityscape to another as if the helicopter is covering a great distance in moments; clouds drift briskly across the sky. Soft atmospheric haze, photorealistic aerial cinematography, consistent composition throughout.",
+      "video": "video_v3.mp4"
+    },
+    {
+      "key": "v4",
+      "label": "v4 - bỏ chữ 'steadily'/'sway gently' (gây cảm giác đứng yên), đổi thành 'surges forward at high speed', thành phố trôi nhanh là HỆ QUẢ của tốc độ",
+      "prompt": "The helicopter surges forward at high speed through the cloudy sky, its rotor blades spinning rapidly. The camera stays locked in a fixed framing relative to the helicopter and the product suspended beneath it on thin cables. Because of the forward speed, the city skyline below streaks past rapidly, changing from one cityscape to another in moments, and the clouds blur past quickly on either side. Soft atmospheric haze, photorealistic aerial cinematography, consistent composition throughout.",
+      "video": "video_v4.mp4"
+    },
+    {
+      "key": "v5",
+      "label": "v5 - mô tả ĐÚNG hiện tượng vừa phát hiện: skyline pan ngang LIÊN TỤC từ phải sang trái, toà nhà mới vào từ mép phải khi toà cũ ra khỏi mép trái",
+      "prompt": "The helicopter flies forward through a cloudy sky, its rotor blades spinning, carrying the product suspended beneath it on thin cables that sway gently. The camera stays locked in a fixed framing relative to the helicopter and the product. Below, the entire city skyline sweeps steadily from right to left beneath the helicopter, new buildings and towers continuously entering the frame from the right edge as earlier ones exit on the left, giving a strong sense of forward flight. Clouds drift in the same direction across the sky. Soft atmospheric haze, photorealistic aerial cinematography, consistent composition throughout.",
+      "video": "video_v5.mp4"
+    },
+    {
+      "key": "v6",
+      "label": "v6 - NGUOI DUNG tu viet bang thuat ngu dien anh chuyen nghiep (side-tracking shot, mui cui xuong, day cheo vi gio, motion blur nen)",
+      "prompt": "Fast side-tracking aerial shot. The helicopter races toward the left of the frame at high speed, its nose tilted down into the direction of flight, rotor blades a blurred spinning disc. The camera flies alongside at the exact same speed, so the helicopter stays in place in the frame while the world rushes past it. The product hanging on the cables is pushed backward to the right by the strong headwind, the cables angled diagonally, the product trailing and swinging behind the helicopter. Low clouds and streaks of mist at the helicopter's altitude whip across the frame from the left edge to the right edge. Below, the city slides rapidly to the right, new buildings constantly entering from the left edge. Strong horizontal motion blur on the background, helicopter and product remain sharp. Photorealistic high-speed aerial action footage.",
+      "video": "video_v6.mp4"
+    }
+  ],
+  "ket_luan_v6": "KET QUA PHA TRON: mui cui xuong va day cheo do gio KHONG xuat hien (giong that bai cua v2) -- 2 chi tiet vat ly bia dat van khong duoc model theo. NHUNG lan DAU TIEN qua ca 6 ban, khung cuoi co MOTION BLUR NHE o nen (nuoc/toa nha phia duoi hoi nhoe trong khi truc thang+lon van net) -- chua ban nao truoc do co blur nay. Co the prompt cang CU THE/dung thuat ngu dien anh chuan (side-tracking shot, world rushes past) giup model bat duoc MOT PHAN hieu ung (blur nen) du khong bat duoc toan bo (mui cui, day cheo). Luu y phu: logo 'Coca-Cola' o khung cuoi hoi meo/nhoe chu -- tac dung phu can theo doi them.",
+  "ket_luan": "So sanh khung tinh giua v1->v5: ca nam deu CO hieu ung nen thanh pho doi khac + canh quat mo khi xem tung khung rieng le, nhung RIENG HUONG PAN (trai/phai) kho doc chinh xac qua vai khung tinh roi rac (vi tri toa nha uoc luong bang mat de sai). v2 (bia dat vat ly: mui chuc xuong, suong mu) ro rang KHONG hieu qua, loai bo huong nay. v3/v4/v5 deu la mo ta dung co che that, tang dan muc do cu the: v3 chi them tinh tu toc do, v4 doi dong tu chinh + quan he nhan-qua, v5 mo ta dung chinh xac huong pan phai->trai da xac nhan tu nguon that (lan xem lai thu 2, do sat 5 khung mot). CAN XEM TRUC TIEP CA 3 ban (v3/v4/v5) de biet ban nao tao cam giac bay nhanh ro nhat -- day van la gioi han cua phuong phap so sanh bang khung tinh cho LOAI chuyen dong nay (toc do va huong pan la cam nhan thi giac khi xem chuyen dong lien tuc, khong doc duoc dang tin cay tu anh tinh roi rac)."
+}

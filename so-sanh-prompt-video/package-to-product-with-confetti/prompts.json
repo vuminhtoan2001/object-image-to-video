@@ -1,0 +1,46 @@
+{
+  "template_id": "package-to-product-with-confetti",
+  "source_verify_note": "Xem lai source.mp4 (129 khung, 24fps) ky hon: frame 0-13 la mot canh teaser khong lien quan (dien thoai tren nen toi); sau do la canh THAT: hop kin (frame ~15-50, 'NEW NEW' tape, 1 o tron ho lo camera dien thoai) -> nap hop bat ra + bong bay/confetti phun len (frame ~55-65) -> hop nam bet + dien thoai dung giua + bong bay + confetti (frame 72 = base.png hien dung) -> tu 72 tro di: camera ZOOM IN dan (da xac nhan qua video v2: san pham to dan chiem het khung, bong bay bi cat dan o dinh khung, hop ra khoi khung do camera lai gan -- KHONG PHAI do bong bay tu bay di trong khi camera dung yen). Prompt v1 dang luu SAI khi ghi 'camera co dinh hoan toan'.",
+  "base_image": "test_preview_image.png",
+  "versions": [
+    {
+      "key": "v1",
+      "label": "v1 - đang dùng trong templates/ (mô tả SAI: 'camera cố định hoàn toàn')",
+      "prompt": "Golden confetti pieces continue falling gently from above, drifting down past the product and settling lightly on the floor, while a cluster of glossy golden balloons floats calmly above the scene, bobbing very slightly on their strings. The two opened cardboard box flaps rest flat on the floor on either side of the product. The camera stays completely fixed throughout, with no camera movement, no pan, no zoom; bright clean studio lighting, photorealistic advertisement cinematography, consistent composition.",
+      "video": "video_v1.mp4"
+    },
+    {
+      "key": "v2",
+      "label": "v2 - sửa theo đúng chuyển động THẬT (camera zoom in dần, hộp/bóng bay ra khỏi khung)",
+      "prompt": "The camera slowly pushes in toward the product in a smooth, continuous zoom, gradually filling more of the frame with it over time. As the camera moves closer, the cardboard box flaps at the bottom of the frame drift out of view first, while the cluster of golden balloons above grows larger and is gradually cropped by the top edge of the frame. Golden confetti pieces keep falling steadily and thickly throughout, drifting past the product and scattering on the floor, catching glints of light as they tumble. Bright clean studio lighting, photorealistic advertisement cinematography.",
+      "video": "video_v2.mp4"
+    },
+    {
+      "key": "v3",
+      "label": "v3 - ghép thêm ý bóng bay TỰ bay lên (cộng hưởng với zoom, không loại trừ nhau)",
+      "prompt": "The camera slowly pushes in toward the product in a smooth, continuous zoom, gradually filling more of the frame with it over time. The cluster of golden balloons continues to drift gently upward on their own, rising further and becoming gradually cropped by the top edge of the frame as the camera moves closer. The cardboard box flaps at the bottom of the frame drift out of view as the camera approaches. Golden confetti pieces keep falling steadily and thickly throughout, drifting past the product and scattering on the floor, catching glints of light as they tumble. Bright clean studio lighting, photorealistic advertisement cinematography.",
+      "video": "video_v3.mp4"
+    },
+    {
+      "key": "v4",
+      "label": "v4 - sửa lỗi dây bóng bay dính xuống sản phẩm: bóng TÁCH RỜI, dây NGẮN, bay hẳn ra khỏi khung",
+      "prompt": "The camera slowly pushes in toward the product in a smooth, continuous zoom, gradually filling more of the frame with it over time. The golden balloons break free and rise quickly on their own, their short strings no longer reaching down to the product, drifting up and out of frame through the top edge as the camera moves closer. The cardboard box flaps at the bottom of the frame drift out of view as the camera approaches. Golden confetti pieces keep falling steadily and thickly throughout, drifting past the product and scattering on the floor, catching glints of light as they tumble. Bright clean studio lighting, photorealistic advertisement cinematography.",
+      "video": "video_v4.mp4"
+    },
+    {
+      "key": "unbox",
+      "label": "unbox - thử nghiệm: bắt đầu từ khung hộp CÒN ĐÓNG (frame 30), test mở hộp",
+      "base_image": "base_box_closed_frame30.png",
+      "prompt": "The sealed cardboard box sits on the wooden floor. Suddenly its top flaps burst open, snapping outward and falling flat onto the floor to either side, as a cluster of golden balloons and a burst of gold confetti erupt upward and outward from inside the box. The product rises up from inside the box to stand upright in the center, revealed as the flaps settle flat. Bright clean studio lighting, photorealistic advertisement cinematography.",
+      "video": "video_unbox.mp4"
+    },
+    {
+      "key": "unbox2",
+      "label": "unbox2 - CÙNG prompt mở hộp nhưng chạy trên ảnh ĐÃ MỞ SẴN (test_preview_image.png) để đối chứng",
+      "base_image": "test_preview_image.png",
+      "prompt": "The sealed cardboard box sits on the wooden floor. Suddenly its top flaps burst open, snapping outward and falling flat onto the floor to either side, as a cluster of golden balloons and a burst of gold confetti erupt upward and outward from inside the box. The product rises up from inside the box to stand upright in the center, revealed as the flaps settle flat. Bright clean studio lighting, photorealistic advertisement cinematography.",
+      "video": "video_unbox_from_opened.mp4"
+    }
+  ],
+  "ket_luan": "v2: XAC NHAN DUNG -- zoom in ro ret va lien tuc qua 3 khung kiem, khop voi quan sat tu source that. v3: zoom con SAU HON v2 (lon gan nhu chiem het khung o khung cuoi) VA bong bay BIEN MAT HOAN TOAN khoi khung (chi con day) -- xac nhan 'bong bay tu bay len' + 'camera zoom' CONG HUONG duoc voi nhau, khong mau thuan. NGUOI DUNG GOP Y: v3 dep nhung day bong bay con dai, trong nhu dinh xuong san pham -- khong tu nhien. v4: sua bang cach noi ro bong bay 'break free' va 'short strings no longer reaching down to the product' -- KET QUA: khong con day nao cham toi lon, chi con 1 doan day ngan cong o dinh khung, lon sach hoan toan. v4 la BAN TOT NHAT tinh den nay cho template nay, nen can nhac chot dung ban nay. unbox (tren khung hop dong that): hop mo + confetti bung no dep, NHUNG san pham 'noi len' tu trong hop bi BIEN DANG hoan toan (thanh vat tron la, mat het hinh dang chu nhat) -- model KHONG giu duoc hinh dang khi vua phai 'tao vat the tu hu khong' vua giu dung hinh, qua suc voi model 4-buoc. unbox2 (CUNG prompt do nhung chay tren anh DA MO SAN): model XU LY HOP LY -- vi khong co hop dong de 'bat ra', no khong co gang ep canh vo ly, ma chi tiep tuc dong tac TU NHIEN tu trang thai hien tai (confetti lang xuong dat, bong bay bay mat khoi khung) VA GIU DUNG HINH DANG SAN PHAM HOAN TOAN (khong bien dang nhu ban unbox goc). KET LUAN CHUNG: hieu ung 'mo hop' chi dang tin cay khi lam BANG ANH TINH (buoc sinh anh preview), vi buoc sinh VIDEO tu 1 anh co san se co gang ep theo huong dan ngay ca khi mau thuan voi anh dau vao, de ra bien dang san pham; nguoc lai neu anh dau vao DA O dung trang thai can co thi video sinh tiep rat on dinh va giu dung hinh dang."
+}

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So sánh prompt video: v1 vs v2</title>
+<style>
+:root {
+  --nen: #f6f6f4; --the: #ffffff; --chu: #1c1c1a; --mo: #6b6b66; --vien: #e2e1dc;
+  --nhan: #2f5bd3; --ok: #1f7a4d; --loi: #b42318; --canh: #9a6700;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nen: #151514; --the: #1f1f1d; --chu: #ececea; --mo: #9d9d97; --vien: #34342f;
+    --nhan: #7b9cff; --ok: #5cc493; --loi: #ff8a7a; --canh: #e3b341;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--nen); color: var(--chu);
+       font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 16px 20px; border-bottom: 1px solid var(--vien); background: var(--the); }
+header h1 { font-size: 17px; margin: 0 0 4px; }
+header p { margin: 0; color: var(--mo); font-size: 13px; }
+main { max-width: 1200px; margin: 0 auto; padding: 16px 20px 60px; }
+.card { background: var(--the); border: 1px solid var(--vien); border-radius: 10px;
+        padding: 18px; margin-bottom: 20px; }
+.card h2 { font-size: 16px; margin: 0 0 10px; }
+.note { background: var(--nen); border-left: 3px solid var(--canh); padding: 10px 12px;
+        border-radius: 6px; font-size: 13px; color: var(--chu); margin-bottom: 16px; }
+.note b { color: var(--canh); }
+.row-top { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+@media (max-width: 760px) { .row-top { grid-template-columns: 1fr; } }
+.box { border: 1px dashed var(--vien); border-radius: 8px; overflow: hidden; }
+.box .lbl { font-size: 11px; color: var(--mo); padding: 5px 8px; border-bottom: 1px dashed var(--vien); }
+.box .ct { display: flex; align-items: center; justify-content: center; background: var(--nen); min-height: 120px; }
+.box img, .box video { max-width: 100%; max-height: 360px; display: block; }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.ver { border: 1px solid var(--vien); border-radius: 8px; padding: 12px; }
+.ver h3 { margin: 0 0 6px; font-size: 13px; color: var(--nhan); }
+.ver .mini-img { max-width: 100%; max-height: 140px; display: block; margin-bottom: 8px; border-radius: 6px; }
+.ver pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, Consolas, monospace; background: var(--nen);
+           padding: 8px; border-radius: 6px; margin: 0 0 10px; max-height: 160px; overflow: auto; }
+.ver video { width: 100%; border-radius: 6px; background: #000; }
+.ketluan { margin-top: 16px; padding: 12px 14px; background: var(--nen); border-radius: 8px;
+           border-left: 3px solid var(--ok); font-size: 13px; }
+.ketluan b { color: var(--ok); }
+.trong { text-align: center; color: var(--mo); padding: 40px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>So sánh prompt video: bản đang dùng (v1) vs bản thử (v2)</h1>
+  <p>Mục đích: xem model Wan2.2 I2V có sinh được chuyển động đúng như prompt mô tả, hay có giới hạn thật — tách biệt hoàn toàn khỏi templates/ chính, không ảnh hưởng dữ liệu đang dùng.</p>
+</header>
+<main id="main"><div class="trong">Đang tải...</div></main>
+
+<script>
+'use strict';
+const IDS = ['helicopter-city-product', 'package-to-product-with-confetti'];
+
+function box(label, src, isVideo) {
+  const d = document.createElement('div'); d.className = 'box';
+  const l = document.createElement('div'); l.className = 'lbl'; l.textContent = label;
+  const c = document.createElement('div'); c.className = 'ct';
+  if (isVideo) {
+    const v = document.createElement('video'); v.src = src; v.controls = true; v.muted = true;
+    c.appendChild(v);
+  } else {
+    const i = document.createElement('img'); i.src = src;
+    c.appendChild(i);
+  }
+  d.appendChild(l); d.appendChild(c);
+  return d;
+}
+
+function verCard(cls, data) {
+  const d = document.createElement('div'); d.className = 'ver ' + cls;
+  const h3 = document.createElement('h3'); h3.textContent = data.label;
+  d.appendChild(h3);
+  if (data.base_image) {
+    const img = document.createElement('img'); img.className = 'mini-img'; img.src = data.base_image;
+    const lbl = document.createElement('div'); lbl.style.cssText = 'font-size:11px;color:var(--mo);margin-bottom:6px';
+    lbl.textContent = 'ảnh bắt đầu: ' + data.base_image.split('/').pop();
+    d.appendChild(img); d.appendChild(lbl);
+  }
+  const pre = document.createElement('pre'); pre.textContent = data.prompt;
+  const v = document.createElement('video'); v.src = data.video; v.controls = true; v.muted = true;
+  d.appendChild(pre); d.appendChild(v);
+  return d;
+}
+
+async function taiMot(id) {
+  const base = id + '/';
+  let data;
+  try { data = await fetch(base + 'prompts.json').then(r => r.json()); }
+  catch (e) { return null; }
+
+  const card = document.createElement('div'); card.className = 'card';
+  const h2 = document.createElement('h2'); h2.textContent = id;
+  card.appendChild(h2);
+
+  if (data.source_verify_note) {
+    const n = document.createElement('div'); n.className = 'note';
+    n.innerHTML = '<b>Xác minh lại video mẫu:</b> ' + data.source_verify_note;
+    card.appendChild(n);
+  }
+
+  const rowTop = document.createElement('div'); rowTop.className = 'row-top';
+  rowTop.appendChild(box('Video mẫu gốc (source.mp4)', base + 'source.mp4', true));
+  rowTop.appendChild(box('Ảnh preview dùng làm điểm bắt đầu', base + (data.base_image || 'test_preview_image.png'), false));
+  card.appendChild(rowTop);
+
+  const cmp = document.createElement('div'); cmp.className = 'compare';
+  const versions = data.versions || [];
+  for (const ver of versions) {
+    cmp.appendChild(verCard('v', { ...ver, video: base + ver.video, base_image: ver.base_image ? base + ver.base_image : null }));
+  }
+  card.appendChild(cmp);
+
+  if (data.ket_luan) {
+    const k = document.createElement('div'); k.className = 'ketluan';
+    k.innerHTML = '<b>Kết luận:</b> ' + data.ket_luan;
+    card.appendChild(k);
+  }
+
+  return card;
+}
+
+(async () => {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  for (const id of IDS) {
+    const card = await taiMot(id);
+    if (card) main.appendChild(card);
+  }
+  if (!main.children.length) main.innerHTML = '<div class="trong">Không tải được dữ liệu — mở trang này qua server HTTP (node serve.cjs), không mở trực tiếp file://.</div>';
+})();
+</script>
+</body>
+</html>

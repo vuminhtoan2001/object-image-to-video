@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So sánh đa sản phẩm</title>
+<style>
+:root { --nen:#f6f6f4; --the:#fff; --chu:#1c1c1a; --mo:#6b6b66; --vien:#e2e1dc; --nhan:#2f5bd3; --ok:#1f7a4d; --loi:#b42318; --canh:#9a6700; }
+@media (prefers-color-scheme: dark) { :root { --nen:#151514; --the:#1f1f1d; --chu:#ececea; --mo:#9d9d97; --vien:#34342f; --nhan:#7b9cff; --ok:#5cc493; --loi:#ff8a7a; --canh:#e3b341; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--nen); color:var(--chu); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+header { padding:16px 20px; border-bottom:1px solid var(--vien); background:var(--the); position:sticky; top:0; z-index:2; }
+header h1 { font-size:17px; margin:0 0 4px; } header p { margin:0; color:var(--mo); font-size:13px; }
+main { max-width:1400px; margin:0 auto; padding:16px 20px 60px; }
+.products { display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+.products figure { margin:0; background:var(--the); border:1px solid var(--vien); border-radius:8px; padding:8px; text-align:center; font-size:12px; color:var(--mo); }
+.products img { height:90px; display:block; margin:0 auto 4px; border-radius:4px; }
+.card { background:var(--the); border:1px solid var(--vien); border-radius:10px; padding:16px; margin-bottom:18px; }
+.card h2 { font-size:15px; margin:0 0 6px; }
+details { margin-bottom:10px; font-size:12px; color:var(--mo); }
+details pre { white-space:pre-wrap; font:12px/1.5 ui-monospace,Consolas,monospace; background:var(--nen); color:var(--chu); padding:8px; border-radius:6px; margin:6px 0 0; }
+.row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+@media (max-width:760px) { .row { grid-template-columns:repeat(2,1fr); } }
+.cell .lbl { font-size:11px; color:var(--mo); margin-bottom:4px; }
+.cell .lbl.moc { color:var(--canh); }
+.cell img { width:100%; display:block; border-radius:6px; border:1px solid var(--vien); cursor:zoom-in; }
+.cell .trong { aspect-ratio:9/16; border:1px dashed var(--vien); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--mo); text-align:center; padding:8px; }
+.cell .trong.loi { color:var(--loi); }
+.dg { font-size:12px; margin-top:4px; padding:4px 6px; border-radius:4px; background:var(--nen); border-left:3px solid var(--mo); }
+.dg.ok { border-color:var(--ok); } .dg.mot { border-color:var(--canh); } .dg.hong { border-color:var(--loi); }
+.dg b { font-weight:600; } .dg.ok b { color:var(--ok); } .dg.mot b { color:var(--canh); } .dg.hong b { color:var(--loi); }
+.tong table { border-collapse:collapse; font-size:13px; width:100%; } .tong td, .tong th { border-bottom:1px solid var(--vien); padding:5px 8px; text-align:left; }
+.tong ul { margin:8px 0 0; padding-left:20px; } .tong li { margin-bottom:4px; }
+#zoom { position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:9; cursor:zoom-out; }
+#zoom img { max-width:95vw; max-height:95vh; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Image prompt của từng template với nhiều loại sản phẩm</h1>
+  <p>Mỗi hàng là 1 template: ảnh nền gốc, kết quả lon Coca cũ (bao-cao/, steps=4) làm mốc, và túi + áo chạy mới (dan_lai=false, steps mặc định 8). Bấm ảnh để phóng to.</p>
+</header>
+<main>
+  <section class="card tong">
+    <h2>Tổng kết</h2>
+    <table>
+      <tr><th></th><th>Đạt</th><th>Một phần</th><th>Hỏng</th></tr>
+      <tr><td>Túi xách</td><td>6</td><td>1</td><td>5</td></tr>
+      <tr><td>Áo thun</td><td>3</td><td>2</td><td>7</td></tr>
+    </table>
+    <ul>
+      <li><b>Prompt hiện tại chưa chuẩn cho mọi sản phẩm.</b> Ăn khi sản phẩm mới có dáng giống vật cũ (lon thay chai/tuýp/lon đều đạt). Hỏng khi dáng khác xa (túi, áo thay điện thoại, chai sơn móng, tuýp).</li>
+      <li>3 kiểu hỏng: (1) <b>vật cũ còn nguyên</b>, sản phẩm mới bị đặt nhỏ phía trước (led-strips, smoky-pedestal với túi; smoke-reveal với túi vẫn ra áo trơn); (2) <b>lai</b>: giữ hình khối vật cũ, chỉ dán hình in sản phẩm mới lên (điện thoại/lon/tuýp in Mickey); (3) <b>sót bộ phận</b> vật cũ (nắp chai sơn móng trong snow, cụm camera điện thoại trong package, cổ chai trong golden-fireworks).</li>
+      <li>Không phụ thuộc kiểu prompt: cả prompt cũ dạng "Replace the entire…" lẫn prompt dạng mô tả cảnh đều hỏng như nhau với áo.</li>
+      <li>Áo thun đặc biệt khó vì là đồ vải mềm, không có "dáng đứng" — prompt "standing upright" ép model giữ khung của vật cũ.</li>
+    </ul>
+  </section>
+  <div class="products" id="products"></div>
+  <div id="list">Đang tải _manifest.json…</div>
+</main>
+<div id="zoom"><img alt=""></div>
+<script>
+const TEN = { 'tui-xach': 'Túi xách', 'ao-thun': 'Áo thun' };
+const zoom = document.getElementById('zoom');
+zoom.onclick = () => zoom.style.display = 'none';
+document.addEventListener('click', e => {
+  if (e.target.matches('.cell img')) { zoom.querySelector('img').src = e.target.src; zoom.style.display = 'flex'; }
+});
+const DG = {
+  'dome-product': { 'tui-xach': ['ok', 'Giày biến mất, túi đúng dáng, có bóng; hơi nhỏ'], 'ao-thun': ['mot', 'Đúng màu/in, nhưng áo đứng phẳng như tấm bìa'] },
+  'golden-fireworks': { 'tui-xach': ['ok', 'Túi đúng; mất vệt sáng dưới đáy, nền phản chiếu đổi'], 'ao-thun': ['hong', 'Cổ chai cũ vẫn nhô trên cổ áo'] },
+  'helicopter-city-product': { 'tui-xach': ['ok', 'Túi treo dây tự nhiên'], 'ao-thun': ['ok', 'Áo treo dây tự nhiên'] },
+  'led-strips-colorful': { 'tui-xach': ['hong', 'Điện thoại còn nguyên, túi đặt nhỏ phía trước'], 'ao-thun': ['hong', 'Vẫn là điện thoại, Mickey thành hình nền'] },
+  'liquid-gold': { 'tui-xach': ['ok', 'Túi đứng trên mặt vàng, có phản chiếu'], 'ao-thun': ['hong', 'Lai: tuýp kem in hình Mickey'] },
+  'package-to-product-with-confetti': { 'tui-xach': ['hong', 'Cụm camera điện thoại dính lên túi'], 'ao-thun': ['hong', 'Đầu điện thoại còn ló sau áo'] },
+  'roses-smoke': { 'tui-xach': ['ok', 'Túi nằm giữa hoa'], 'ao-thun': ['ok', 'Áo giữa hoa (hơi cứng)'] },
+  'smoke-reveal': { 'tui-xach': ['hong', 'Không có túi, ra áo trơn màu kem (giữ vật cũ)'], 'ao-thun': ['ok', 'Đạt (vật cũ vốn là áo)'] },
+  'smoky-pedestal': { 'tui-xach': ['hong', 'Điện thoại còn nguyên, túi nhỏ phía trước'], 'ao-thun': ['hong', 'Lai: điện thoại in Mickey'] },
+  'snow': { 'tui-xach': ['hong', 'Nắp chai sơn móng còn trên túi'], 'ao-thun': ['hong', 'Nắp chai sơn móng còn trên áo'] },
+  'water-electric-hues': { 'tui-xach': ['ok', 'Túi trong vòng nước bắn'], 'ao-thun': ['hong', 'Lai: lon xanh in Mickey'] },
+  'water-splashes-light': { 'tui-xach': ['mot', 'Túi chìm quá nửa, chỉ thấy phần trên'], 'ao-thun': ['mot', 'Thân áo lẫn vào nước'] },
+};
+const NHAN = { ok: 'Đạt', mot: 'Một phần', hong: 'Hỏng' };
+function o(lbl, src, cls, d) {
+  const dgHtml = d ? `<div class="dg ${d[0]}"><b>${NHAN[d[0]]}:</b> ${d[1]}</div>` : '';
+  return `<div class="cell"><div class="lbl ${cls || ''}">${lbl}</div><img loading="lazy" src="${src}" alt="${lbl}">${dgHtml}</div>`;
+}
+(async () => {
+  const m = await (await fetch('_manifest.json', { cache: 'no-store' })).json();
+  document.getElementById('products').innerHTML =
+    `<figure><img src="products/coca.jpg">Coca (mốc cũ)</figure>` +
+    m.products.map(p => `<figure><img src="products/${p.key}.jpg">${TEN[p.key] || p.key}</figure>`).join('');
+  const ids = Object.keys(m.results);
+  const cards = await Promise.all(ids.map(async id => {
+    let prompt = '';
+    try { prompt = (await (await fetch(`../templates/${id}/template.json`)).json()).image_prompt; } catch (e) {}
+    const cols = m.products.map(p => {
+      const r = m.results[id][p.key];
+      if (r && r.error) return `<div class="cell"><div class="lbl">${TEN[p.key]}</div><div class="trong loi">Lỗi: ${r.error}</div></div>`;
+      if (r || id === 'dome-product') return o(TEN[p.key] || p.key, `${id}/${p.key}.png`, '', (DG[id] || {})[p.key]);
+      return `<div class="cell"><div class="lbl">${TEN[p.key]}</div><div class="trong">Chưa chạy</div></div>`;
+    }).join('');
+    return `<section class="card"><h2>${id}</h2>
+      <details><summary>image_prompt</summary><pre></pre></details>
+      <div class="row">${o('Ảnh nền', `../templates/${id}/base.png`)}${o('Coca (mốc cũ)', `../bao-cao/${id}/test_preview_image.png`, 'moc')}${cols}</div>
+      </section>`.replace('<pre></pre>', `<pre>${prompt.replace(/</g, '&lt;')}</pre>`);
+  }));
+  document.getElementById('list').innerHTML = cards.join('');
+})().catch(e => document.getElementById('list').textContent = 'Không tải được dữ liệu — mở qua node serve.cjs thay vì file://. ' + e.message);
+</script>
+</body>
+</html>

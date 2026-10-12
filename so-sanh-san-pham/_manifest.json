@@ -1,0 +1,103 @@
+{
+  "products": [
+    {
+      "key": "tui-xach",
+      "url": "https://lacamie.com/wp-content/uploads/2025/11/TX5A0807-TRANG-03-tui-xach-hobo-nhun-mieng-dinh-dinh-tan-da-scaled.jpg"
+    },
+    {
+      "key": "ao-thun",
+      "url": "https://file.hstatic.net/1000290074/file/ao-thun-be-trai-93204__11__c2d1cb4560964baeb744d7815d225139_grande.jpg"
+    }
+  ],
+  "results": {
+    "dome-product": {},
+    "golden-fireworks": {
+      "tui-xach": {
+        "job_id": "42e2ca9277bb42a9902f856715d61013"
+      },
+      "ao-thun": {
+        "job_id": "d18eb83097af47b68b20e719d3d26764"
+      }
+    },
+    "helicopter-city-product": {
+      "tui-xach": {
+        "job_id": "3f1fd4b0eef74329ba9c6a7460949b63"
+      },
+      "ao-thun": {
+        "job_id": "730797ef0e674c75975ee46dfb913996"
+      }
+    },
+    "led-strips-colorful": {
+      "tui-xach": {
+        "job_id": "67489831b91e40debe15d03f03732f6f"
+      },
+      "ao-thun": {
+        "job_id": "4bf43dc1242c463e90e30efacf935c58"
+      }
+    },
+    "liquid-gold": {
+      "tui-xach": {
+        "job_id": "93b3b79806c54ddca71129f310d213f9"
+      },
+      "ao-thun": {
+        "job_id": "60556a1a006a4f8a9626152004f5ea20"
+      }
+    },
+    "package-to-product-with-confetti": {
+      "tui-xach": {
+        "job_id": "4393c9ba66c24fcc8439f5f515981610"
+      },
+      "ao-thun": {
+        "job_id": "5893fe9be71846a7be382ba2313712c5"
+      }
+    },
+    "roses-smoke": {
+      "tui-xach": {
+        "job_id": "11f0f746fd6840d39eb08e84c6c910ff"
+      },
+      "ao-thun": {
+        "job_id": "bae968ce903441f28f49eba638bfa016"
+      }
+    },
+    "smoke-reveal": {
+      "tui-xach": {
+        "job_id": "cbb22a7a869540afa393abc283487920"
+      },
+      "ao-thun": {
+        "job_id": "0e1cac05a60d49dcbe6c31b6a9e2df90"
+      }
+    },
+    "smoky-pedestal": {
+      "tui-xach": {
+        "job_id": "8c174a4f0d1941238b82a6b64b3e7b5f"
+      },
+      "ao-thun": {
+        "job_id": "0cabe750f0d941baa460138fc62898a2"
+      }
+    },
+    "snow": {
+      "tui-xach": {
+        "job_id": "170a25460942445d9cfa10d7f86bb18e"
+      },
+      "ao-thun": {
+        "job_id": "cf1de942428f43209b7a8623003df03a"
+      }
+    },
+    "water-electric-hues": {
+      "tui-xach": {
+        "job_id": "b089813a56524cb5a2fa161a2cc55478"
+      },
+      "ao-thun": {
+        "job_id": "2d1d110642dd427ca1e436e4610da834"
+      }
+    },
+    "water-splashes-light": {
+      "tui-xach": {
+        "job_id": "047795e1a8d44ccd94822cb7a97e17a8"
+      },
+      "ao-thun": {
+        "job_id": "1a7bce77da1d4ca784e09fb20cdcb873"
+      }
+    }
+  }
+}
