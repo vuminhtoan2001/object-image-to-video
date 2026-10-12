@@ -12,8 +12,6 @@ const VID_SERVERS = [
 ];
 const PRODUCT_URL = 'https://bizweb.dktcdn.net/thumb/grande/100/469/765/products/1503-9de8f3562b364e56b550ff30bc493122-2c0db7cc76fd4b7f8b3c767fb24bc277-d4f804d8fc474b4bae5f628ff0d632e0-master.jpg';
 
-const SHARED = JSON.parse(fs.readFileSync('templates/_shared.json', 'utf8'));
-
 function log(...a) { console.log(new Date().toISOString().slice(11, 19), ...a); }
 
 async function postJob(base, p, body) {

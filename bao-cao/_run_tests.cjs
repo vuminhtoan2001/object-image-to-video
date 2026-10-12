@@ -6,8 +6,6 @@ const IMG_SERVER = 'https://cindy-buffer-workflow-marketplace.trycloudflare.com'
 const VID_SERVERS = [];
 const PRODUCT_URL = 'https://bizweb.dktcdn.net/thumb/grande/100/469/765/products/1503-9de8f3562b364e56b550ff30bc493122-2c0db7cc76fd4b7f8b3c767fb24bc277-d4f804d8fc474b4bae5f628ff0d632e0-master.jpg';
 
-const SHARED = JSON.parse(fs.readFileSync('templates/_shared.json', 'utf8'));
-
 function log(...a) { console.log(new Date().toISOString().slice(11, 19), ...a); }
 
 async function postJob(base, p, body) {
@@ -64,7 +62,7 @@ async function stage1(id) {
 
 async function stage2(entry, vidServer) {
   const { id, tpl, imageJobId } = entry;
-  const chuyenDong = [tpl.effect_prompt, SHARED.preserve_product_clause].filter(Boolean).join(' ');
+  const chuyenDong = tpl.effect_prompt; // KHONG con noi preserve_product_clause (chot 2026-10, xem _shared.json)
   const anhUrl = IMG_SERVER + '/jobs/' + imageJobId + '/result';
   const body = { anh_url: anhUrl, chuyen_dong: chuyenDong, test_case: 'baocao-' + id, ...(tpl.params || {}) };
   log(id, '[video] submitting on', vidServer, '...');

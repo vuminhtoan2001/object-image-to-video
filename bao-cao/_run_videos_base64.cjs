@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const SHARED = JSON.parse(fs.readFileSync('templates/_shared.json', 'utf8'));
 const VID_SERVERS = [
   'https://jackson-surround-border-submitted.trycloudflare.com',
   'https://missed-throw-spin-somebody.trycloudflare.com',
@@ -39,7 +38,7 @@ async function downloadResult(base, id, outPath) {
 async function stage2(id, vidServer) {
   const tpl = JSON.parse(fs.readFileSync(path.join('templates', id, 'template.json'), 'utf8'));
   const imgB64 = fs.readFileSync(path.join('bao-cao', id, 'test_preview_image.png')).toString('base64');
-  const chuyenDong = [tpl.effect_prompt, SHARED.preserve_product_clause].filter(Boolean).join(' ');
+  const chuyenDong = tpl.effect_prompt; // KHONG con noi preserve_product_clause (chot 2026-10, xem _shared.json)
   const body = { anh_base64: imgB64, chuyen_dong: chuyenDong, test_case: 'baocao-b64-' + id, ...(tpl.params || {}) };
   log(id, '[video] submitting on', vidServer, '(anh_base64, khong can image server)...');
   const job = await postJob(vidServer, '/generate/image_to_video_wan22', body);

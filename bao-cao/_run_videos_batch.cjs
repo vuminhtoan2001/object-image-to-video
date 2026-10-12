@@ -2,8 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const SHARED = JSON.parse(fs.readFileSync('templates/_shared.json', 'utf8'));
-
 // id -> { imageJobId, imgServer }
 const ENTRIES = {
   'dome-product': { imageJobId: '0a8f1d8cf7884f21aa04df27cd24f0b3', imgServer: 'https://examined-jobs-heard-franklin.trycloudflare.com' },
@@ -53,7 +51,7 @@ async function downloadResult(base, id, outPath) {
 async function stage2(id, vidServer) {
   const { imageJobId, imgServer } = ENTRIES[id];
   const tpl = JSON.parse(fs.readFileSync(path.join('templates', id, 'template.json'), 'utf8'));
-  const chuyenDong = [tpl.effect_prompt, SHARED.preserve_product_clause].filter(Boolean).join(' ');
+  const chuyenDong = tpl.effect_prompt; // KHONG con noi preserve_product_clause (chot 2026-10, xem _shared.json)
   const anhUrl = imgServer + '/jobs/' + imageJobId + '/result';
   const body = { anh_url: anhUrl, chuyen_dong: chuyenDong, test_case: 'baocao-' + id, ...(tpl.params || {}) };
   log(id, '[video] submitting on', vidServer, '...');

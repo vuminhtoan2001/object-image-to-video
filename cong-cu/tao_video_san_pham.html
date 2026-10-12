@@ -95,12 +95,8 @@ code { background: var(--nen); padding: 1px 5px; border-radius: 4px; }
     <label>Prompt sinh ẢNH <small>("image 1" = ảnh nền này · "image 2" = sản phẩm upload bên dưới)</small></label>
     <textarea id="image-prompt" spellcheck="false" placeholder="Chọn template để nạp prompt"></textarea>
 
-    <label>Hiệu ứng riêng của template (chỉ mô tả nền/camera) <small>— KHÔNG nhắc gì về sản phẩm</small></label>
+    <label>Prompt chuyển động (chuyen_dong) gửi khi tạo video <small>— chỉ mô tả nền/camera, KHÔNG nhắc gì về sản phẩm; gửi nguyên văn, không ghép thêm gì</small></label>
     <textarea id="effect-prompt" spellcheck="false" placeholder="Chọn template để nạp prompt"></textarea>
-    <label>Câu cố định (giữ nguyên sản phẩm) <small>— dùng chung mọi template, từ <code>_shared.json</code></small></label>
-    <textarea id="shared-clause" spellcheck="false"></textarea>
-    <label>→ Prompt chuyển động cuối cùng gửi đi khi tạo video <small>(hiệu ứng + câu cố định, chỉ xem)</small></label>
-    <textarea id="chuyen-dong-full" class="preview" readonly></textarea>
 
     <label>Tham số video</label>
     <div class="luoi4">
@@ -189,7 +185,6 @@ if (srvUrl('#srv-vid')) kiemServer('#srv-vid', '#tt-vid');
 
 // ---------------------------------------------------------------- nap thu muc templates/
 let TEMPLATES = {};   // id -> { json, baseFile, baseUrl, jsonFile }
-let SHARED = { preserve_product_clause: '' };
 
 function hienAnh(el, src) {
   el.innerHTML = '';
@@ -211,14 +206,10 @@ $('#nut-chon-thu-muc').onclick = () => {
   inp.onchange = async () => {
     const files = Array.from(inp.files);
     if (!files.length) return;
-    TEMPLATES = {}; SHARED = { preserve_product_clause: '' };
+    TEMPLATES = {};
     const byDir = {};
     for (const f of files) {
-      const parts = f.webkitRelativePath.split('/');   // templates/<id>/<file> hoac templates/_shared.json
-      if (parts.length === 2 && parts[1] === '_shared.json') {
-        try { SHARED = JSON.parse(await f.text()); } catch (e) {}
-        continue;
-      }
+      const parts = f.webkitRelativePath.split('/');   // templates/<id>/<file>
       if (parts.length < 3) continue;
       const id = parts[1];
       (byDir[id] = byDir[id] || {})[parts[2]] = f;
@@ -237,7 +228,7 @@ $('#nut-chon-thu-muc').onclick = () => {
     if (!ids.length) { $('#tt-thu-muc').textContent = 'Không thấy template.json nào trong thư mục đã chọn (chọn đúng thư mục templates/).'; sel.disabled = true; return; }
     ids.forEach(id => { const o = document.createElement('option'); o.value = id; o.textContent = id; sel.appendChild(o); });
     sel.disabled = false;
-    $('#tt-thu-muc').textContent = `Đã nạp ${ids.length} template.` + (SHARED.preserve_product_clause ? '' : ' (KHÔNG thấy _shared.json — câu cố định để trống, tự điền tay)');
+    $('#tt-thu-muc').textContent = `Đã nạp ${ids.length} template.`;
     chonTemplate(ids[0]);
   };
   inp.click();
@@ -252,8 +243,6 @@ function chonTemplate(id) {
   const j = t.json;
   $('#image-prompt').value = j.image_prompt || '';
   $('#effect-prompt').value = j.effect_prompt || '';
-  $('#shared-clause').value = SHARED.preserve_product_clause || '';
-  veChuyenDongFull();
   const p = j.params || {};
   $('#p-so-frame').value = p.so_frame ?? '';
   $('#p-fps').value = p.fps ?? '';
@@ -269,13 +258,6 @@ function chonTemplate(id) {
   khoaBuoc2(false);
   jobAnhHienTai = null;
 }
-function veChuyenDongFull() {
-  const a = $('#effect-prompt').value.trim(), b = $('#shared-clause').value.trim();
-  $('#chuyen-dong-full').value = [a, b].filter(Boolean).join(' ');
-}
-$('#effect-prompt').addEventListener('input', veChuyenDongFull);
-$('#shared-clause').addEventListener('input', veChuyenDongFull);
-
 $('#nut-tai-json').onclick = () => {
   const t = TEMPLATES[templateHienTai]; if (!t) return alert('Chưa chọn template');
   const j = { ...t.json };
@@ -393,7 +375,7 @@ $('#nut-tao-video').onclick = async () => {
   try {
     if (!base) throw new Error('chưa nhập server URL video (ImageToVideo_Wan22)');
     if (!jobAnhHienTai) throw new Error('chưa có ảnh xem trước ở bước 3');
-    const chuyenDong = $('#chuyen-dong-full').value.trim();
+    const chuyenDong = $('#effect-prompt').value.trim();
     if (!chuyenDong) throw new Error('chuyển động đang trống');
     btn.disabled = true; thanh.style.width = '2%'; td.textContent = 'đang gửi job...';
     const than = {
