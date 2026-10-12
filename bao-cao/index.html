@@ -33,7 +33,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 60px; }
 .b-ok { background: #1f7a4d22; color: var(--ok); }
 .b-wait { background: #9a670022; color: var(--canh); }
 .sub { color: var(--mo); font-size: 12px; margin-bottom: 10px; }
-.cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+.cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 12px; }
+@media (max-width: 1000px) { .cols { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 800px) { .cols { grid-template-columns: repeat(2, 1fr); } }
 .slot { border: 1px dashed var(--vien); border-radius: 8px; overflow: hidden; display: flex;
         flex-direction: column; }
@@ -59,70 +60,23 @@ pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, Consolas, monospace; b
 <body>
 <header>
   <h1>Báo cáo test template video sản phẩm</h1>
-  <button id="nut-chon" >Chọn thư mục project</button>
-  <span id="tt">chưa nạp — bấm chọn thư mục gốc (chứa cả templates/ và bao-cao/)</span>
+  <button id="nut-tai">Tải lại</button>
+  <span id="tt">đang tải...</span>
 </header>
-<main id="main"><div class="trong">Chọn thư mục project để xem báo cáo.</div></main>
+<main id="main"><div class="trong">Đang tải báo cáo...</div></main>
 <div id="phong"></div>
 
 <script>
 'use strict';
 const $ = s => document.querySelector(s);
 
-function srcFromFile(f) { return URL.createObjectURL(f); }
-
-$('#nut-chon').onclick = () => {
-  const inp = document.createElement('input');
-  inp.type = 'file'; inp.webkitdirectory = true; inp.multiple = true;
-  inp.onchange = async () => {
-    const files = Array.from(inp.files);
-    if (!files.length) return;
-    const templates = {};   // id -> { json, baseFile }
-    const reports = {};     // id -> { product, preview:[{label,file}], video:[{label,file}] }
-    let productFile = null, sharedJson = null;
-
-    for (const f of files) {
-      const parts = f.webkitRelativePath.split('/');
-      // templates/<id>/<file>  or  templates/_shared.json
-      if (parts.length >= 2 && parts[0] === 'templates') {
-        if (parts.length === 2 && parts[1] === '_shared.json') {
-          try { sharedJson = JSON.parse(await f.text()); } catch (e) {}
-          continue;
-        }
-        if (parts.length === 3) {
-          const id = parts[1];
-          (templates[id] = templates[id] || {})[parts[2]] = f;
-        }
-      }
-      // bao-cao/<id>/<file>  or  bao-cao/product.png
-      if (parts.length >= 2 && parts[0] === 'bao-cao') {
-        if (parts.length === 2 && /^product/.test(parts[1])) { productFile = f; continue; }
-        if (parts.length === 3) {
-          const id = parts[1];
-          const r = (reports[id] = reports[id] || { preview: [], video: [] });
-          if (/^test_preview_image/.test(parts[2])) r.preview.push({ name: parts[2], file: f });
-          else if (/^test_result/.test(parts[2])) r.video.push({ name: parts[2], file: f });
-        }
-      }
-    }
-
-    const ids = Object.keys(templates).filter(id => templates[id]['template.json']).sort();
-    if (!ids.length) {
-      $('#tt').textContent = 'Không thấy templates/<id>/template.json nào — chọn đúng thư mục gốc project.';
-      return;
-    }
-    $('#tt').textContent = `Đã nạp ${ids.length} template${productFile ? ' · ảnh sản phẩm test: ' + productFile.name : ''}`;
-
-    const parsed = {};
-    for (const id of ids) {
-      try { parsed[id] = JSON.parse(await templates[id]['template.json'].text()); }
-      catch (e) { parsed[id] = null; }
-    }
-
-    render(ids, parsed, templates, reports, productFile);
-  };
-  inp.click();
-};
+// Trang nay duoc PHAT qua HTTP (vd `node serve.cjs` o goc project) de may khac trong
+// cung mang LAN cung xem duoc -- khong con doc thu muc local nua, ma fetch() tung file
+// qua duong dan tuong doi. index.html nam o <goc>/bao-cao/, nen anh/video trong
+// templates/ phai lui ra ngoai bang '../templates/...'.
+async function tonTai(url) {
+  try { const r = await fetch(url, { method: 'HEAD' }); return r.ok; } catch (e) { return false; }
+}
 
 function openZoom(src, isVideo) {
   const p = $('#phong');
@@ -131,19 +85,18 @@ function openZoom(src, isVideo) {
 }
 $('#phong').onclick = e => { if (e.target.id === 'phong') { $('#phong').style.display = 'none'; $('#phong').innerHTML = ''; } };
 
-function slot(label, file, isVideo) {
+function slot(label, url, isVideo, co) {
   const d = document.createElement('div'); d.className = 'slot';
   const l = document.createElement('div'); l.className = 'lbl'; l.textContent = label;
   const b = document.createElement('div'); b.className = 'box';
-  if (file) {
-    const src = srcFromFile(file);
+  if (url && co) {
     if (isVideo) {
-      const v = document.createElement('video'); v.src = src; v.muted = true;
-      v.onclick = () => openZoom(src, true);
+      const v = document.createElement('video'); v.src = url; v.muted = true;
+      v.onclick = () => openZoom(url, true);
       b.appendChild(v);
     } else {
-      const i = document.createElement('img'); i.src = src;
-      i.onclick = () => openZoom(src, false);
+      const i = document.createElement('img'); i.src = url;
+      i.onclick = () => openZoom(url, false);
       b.appendChild(i);
     }
   } else {
@@ -154,66 +107,90 @@ function slot(label, file, isVideo) {
   return d;
 }
 
-function render(ids, parsed, templates, reports, productFile) {
-  const main = $('#main');
-  main.innerHTML = '';
-  for (const id of ids) {
-    const tpl = parsed[id];
-    const rep = reports[id] || { preview: [], video: [] };
-    const card = document.createElement('div'); card.className = 'card';
+async function taiMotTemplate(id) {
+  const base = '../templates/' + id + '/';
+  const rep = id + '/';
+  const [tplJson, source, baseImg, preview, video] = await Promise.all([
+    fetch(base + 'template.json').then(r => r.ok ? r.json() : null).catch(() => null),
+    tonTai(base + 'source.mp4'),
+    tonTai(base + 'base.png'),
+    tonTai(rep + 'test_preview_image.png'),
+    tonTai(rep + 'test_result.mp4'),
+  ]);
+  return {
+    id, tpl: tplJson,
+    sourceUrl: source ? base + 'source.mp4' : null,
+    baseUrl: baseImg ? base + 'base.png' : null,
+    previewUrl: preview ? rep + 'test_preview_image.png' : null,
+    videoUrl: video ? rep + 'test_result.mp4' : null,
+  };
+}
 
-    const h2 = document.createElement('h2');
-    const hasMain = rep.preview.some(p => p.name === 'test_preview_image.png') &&
-                    rep.video.some(v => v.name === 'test_result.mp4');
-    const badge = document.createElement('span');
-    badge.className = 'badge ' + (hasMain ? 'b-ok' : 'b-wait');
-    badge.textContent = hasMain ? 'đã test' : 'chưa đủ';
-    h2.textContent = id + '  '; h2.appendChild(badge);
-    if (tpl && tpl.status) {
-      const st = document.createElement('span'); st.className = 'sub'; st.style.marginBottom = '0';
-      st.textContent = '· trạng thái: ' + tpl.status;
-      h2.appendChild(st);
-    }
-    card.appendChild(h2);
+function veMotTemplate(main, d, productUrl, productCo) {
+  const card = document.createElement('div'); card.className = 'card';
+  const tpl = d.tpl;
 
-    if (tpl && tpl.frame_image_note) {
-      const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = tpl.frame_image_note;
-      card.appendChild(sub);
-    }
+  const h2 = document.createElement('h2');
+  const daXong = !!(d.previewUrl && d.videoUrl);
+  const badge = document.createElement('span');
+  badge.className = 'badge ' + (daXong ? 'b-ok' : 'b-wait');
+  badge.textContent = daXong ? 'đã test' : 'chưa đủ';
+  h2.textContent = d.id + '  '; h2.appendChild(badge);
+  if (tpl && tpl.status) {
+    const st = document.createElement('span'); st.className = 'sub'; st.style.marginBottom = '0';
+    st.textContent = '· trạng thái: ' + tpl.status;
+    h2.appendChild(st);
+  }
+  card.appendChild(h2);
 
-    const cols = document.createElement('div'); cols.className = 'cols';
-    cols.appendChild(slot('Ảnh nền template (base.png)', templates[id] && templates[id]['base.png']));
-    cols.appendChild(slot('Sản phẩm thay thế', productFile));
-    const mainPreview = rep.preview.find(p => p.name === 'test_preview_image.png');
-    cols.appendChild(slot('Ảnh preview (sinh ra)', mainPreview && mainPreview.file));
-    const mainVideo = rep.video.find(v => v.name === 'test_result.mp4');
-    cols.appendChild(slot('Video kết quả', mainVideo && mainVideo.file, true));
-    card.appendChild(cols);
+  if (tpl && tpl.frame_image_note) {
+    const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = tpl.frame_image_note;
+    card.appendChild(sub);
+  }
 
-    const otherPreviews = rep.preview.filter(p => p.name !== 'test_preview_image.png');
-    if (otherPreviews.length) {
-      const lbl = document.createElement('div'); lbl.className = 'sub'; lbl.textContent = 'Các lần thử ảnh khác:';
-      card.appendChild(lbl);
-      const row = document.createElement('div'); row.className = 'variants';
-      otherPreviews.forEach(p => row.appendChild(slot(p.name, p.file)));
-      card.appendChild(row);
-    }
+  const cols = document.createElement('div'); cols.className = 'cols';
+  cols.appendChild(slot('Video mẫu gốc (source.mp4)', d.sourceUrl, true, !!d.sourceUrl));
+  cols.appendChild(slot('Ảnh nền template (base.png)', d.baseUrl, false, !!d.baseUrl));
+  cols.appendChild(slot('Sản phẩm thay thế', productUrl, false, productCo));
+  cols.appendChild(slot('Ảnh preview (sinh ra)', d.previewUrl, false, !!d.previewUrl));
+  cols.appendChild(slot('Video kết quả', d.videoUrl, true, !!d.videoUrl));
+  card.appendChild(cols);
 
-    if (tpl) {
-      const det1 = document.createElement('details');
-      det1.innerHTML = '<summary>image_prompt (dùng để sinh ảnh)</summary>';
-      const pre1 = document.createElement('pre'); pre1.textContent = tpl.image_prompt || '(trống)';
-      det1.appendChild(pre1); card.appendChild(det1);
+  if (tpl) {
+    const det1 = document.createElement('details');
+    det1.innerHTML = '<summary>image_prompt (dùng để sinh ảnh)</summary>';
+    const pre1 = document.createElement('pre'); pre1.textContent = tpl.image_prompt || '(trống)';
+    det1.appendChild(pre1); card.appendChild(det1);
 
-      const det2 = document.createElement('details');
-      det2.innerHTML = '<summary>effect_prompt (phần riêng, dùng để sinh video)</summary>';
-      const pre2 = document.createElement('pre'); pre2.textContent = tpl.effect_prompt || '(trống)';
-      det2.appendChild(pre2); card.appendChild(det2);
-    }
+    const det2 = document.createElement('details');
+    det2.innerHTML = '<summary>effect_prompt (phần riêng, dùng để sinh video)</summary>';
+    const pre2 = document.createElement('pre'); pre2.textContent = tpl.effect_prompt || '(trống)';
+    det2.appendChild(pre2); card.appendChild(det2);
+  }
 
-    main.appendChild(card);
+  main.appendChild(card);
+}
+
+async function taiBaoCao() {
+  const main = $('#main'), tt = $('#tt');
+  main.innerHTML = ''; tt.textContent = 'đang tải...';
+  let manifest;
+  try {
+    manifest = await fetch('_manifest.json').then(r => r.json());
+  } catch (e) {
+    tt.textContent = 'Không đọc được _manifest.json — trang này phải MỞ QUA HTTP (vd node serve.cjs), không mở trực tiếp bằng file://.';
+    main.innerHTML = '<div class="trong">Xem hướng dẫn chạy server ở README hoặc hỏi lại.</div>';
+    return;
+  }
+  const productCo = await tonTai('product.png');
+  tt.textContent = `Đã nạp ${manifest.ids.length} template` + (productCo ? ' · có ảnh sản phẩm test' : '');
+  for (const id of manifest.ids) {
+    const d = await taiMotTemplate(id);
+    veMotTemplate(main, d, 'product.png', productCo);
   }
 }
+$('#nut-tai').onclick = taiBaoCao;
+taiBaoCao();
 </script>
 </body>
 </html>
